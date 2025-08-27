@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidenta | Get Pre-Qualified in 30 Seconds | Business Funding</title>
+    <meta name="description" content="See if you're approved for $10K-$5M in business funding. No credit check to pre-qualify. 24-hour funding available.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        .form-input:focus {
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .success-checkmark {
+            animation: scaleIn 0.3s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .exit-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .exit-popup-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .field-help-tooltip {
+            position: absolute;
+            background: #1e40af;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            bottom: 100%;
+            left: 0;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        
+        .field-help-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 2rem;
+            border: 6px solid transparent;
+            border-top-color: #1e40af;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="font-display text-2xl font-bold text-blue-600">Fidenta</div>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">No Credit Check</span>
+                </div>
+                <div class="text-sm text-gray-600">
+                    Questions? <span class="font-semibold text-blue-600">1-888-FIDENTA</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Progress Bar (Sticky) -->
+    <div class="bg-white border-b sticky top-14 z-30">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex justify-between text-xs text-gray-500 mb-1">
+                <span>Quick Pre-Qualification</span>
+                <span><span id="progressText">0</span>% Complete</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-2xl">
+        
+        <!-- Trust Signal -->
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center">
+            <svg class="w-5 h-5 text-green-600 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+                <div class="font-semibold text-green-800">Pre-Qualify Without Affecting Your Credit</div>
+                <div class="text-sm text-green-700">Get matched with the right funding options in 30 seconds</div>
+            </div>
+        </div>
+        
+        <!-- Form -->
+        <form id="quickQualifyForm" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            
+            <!-- Stage 1: Basic Business Info (Non-threatening) -->
+            <div id="stage1" class="space-y-5">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Let's start with your business</h2>
+                <p class="text-sm text-gray-600 mb-5">Basic information to understand your funding needs</p>
+                
+                <!-- Industry (Easy start) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        What industry are you in?
+                    </label>
+                    <select id="businessType" name="businessType" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                        <option value="">Select your industry</option>
+                        <option value="retail">Retail Store</option>
+                        <option value="restaurant">Restaurant / Food Service</option>
+                        <option value="construction">Construction / Contractor</option>
+                        <option value="transportation">Transportation / Trucking</option>
+                        <option value="healthcare">Healthcare / Medical</option>
+                        <option value="professional-services">Professional Services</option>
+                        <option value="ecommerce">E-commerce / Online</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="real-estate">Real Estate</option>
+                        <option value="other">Other Service Business</option>
+                    </select>
+                </div>
+                
+                <!-- Time in Business -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        How long have you been in business?
+                    </label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <label class="relative">
+                            <input type="radio" name="timeInBusiness" value="0-6" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">Startup (< 6mo)</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="timeInBusiness" value="6-12" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">6-12 months</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="timeInBusiness" value="12-24" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">1-2 years</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="timeInBusiness" value="24-60" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">2-5 years</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="timeInBusiness" value="60+" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">5+ years</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Monthly Revenue (Critical for MCA) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Average monthly revenue?
+                        <span class="text-xs text-gray-500 font-normal">(Last 3 months average)</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="relative">
+                            <input type="radio" name="monthlyRevenue" value="0-10000" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">Under $10K</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="monthlyRevenue" value="10000-25000" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">$10K - $25K</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="monthlyRevenue" value="25000-50000" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">$25K - $50K</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="monthlyRevenue" value="50000-100000" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">$50K - $100K</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="monthlyRevenue" value="100000-250000" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">$100K - $250K</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="monthlyRevenue" value="250000+" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">$250K+</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Funding Amount (Intent signal) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        How much funding do you need?
+                    </label>
+                    <input type="text" id="fundingAmount" name="fundingAmount" 
+                           placeholder="Enter amount (e.g., 50000)" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                    <p class="text-xs text-gray-500 mt-1">Available: $10,000 - $5,000,000</p>
+                </div>
+            </div>
+            
+            <!-- Stage 2: Qualification Details -->
+            <div id="stage2" class="space-y-5 hidden">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Almost there!</h2>
+                <p class="text-sm text-gray-600 mb-5">A few more details to match you with the best options</p>
+                
+                <!-- Funding Purpose -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        What will you use the funds for?
+                    </label>
+                    <select id="fundingPurpose" name="fundingPurpose" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                        <option value="">Select primary purpose</option>
+                        <option value="expansion">Business Expansion</option>
+                        <option value="equipment">Equipment Purchase</option>
+                        <option value="inventory">Inventory</option>
+                        <option value="working-capital">Working Capital</option>
+                        <option value="marketing">Marketing / Growth</option>
+                        <option value="emergency">Emergency / Urgent Need</option>
+                        <option value="payroll">Payroll</option>
+                        <option value="renovation">Renovation / Improvement</option>
+                        <option value="debt-consolidation">Consolidate Debt</option>
+                    </select>
+                </div>
+                
+                <!-- Funding Timeframe (Urgency) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        How soon do you need funding?
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="relative">
+                            <input type="radio" name="fundingTimeframe" value="immediate" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-red-500 peer-checked:bg-red-50">
+                                <span class="text-sm font-medium">ASAP</span>
+                                <span class="text-xs text-gray-500 block">Within 48 hours</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="fundingTimeframe" value="week" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                <span class="text-sm font-medium">This Week</span>
+                                <span class="text-xs text-gray-500 block">3-7 days</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="fundingTimeframe" value="month" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm font-medium">This Month</span>
+                                <span class="text-xs text-gray-500 block">Within 30 days</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="fundingTimeframe" value="flexible" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                <span class="text-sm font-medium">Flexible</span>
+                                <span class="text-xs text-gray-500 block">Best terms matter most</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Credit Score Range (Sensitive but necessary) -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Estimated personal credit score?
+                        <span class="text-xs text-gray-500 font-normal">(This won't affect your credit)</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="relative">
+                            <input type="radio" name="creditScore" value="750+" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                <span class="text-sm">Excellent (750+)</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="creditScore" value="700-749" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                <span class="text-sm">Good (700-749)</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="creditScore" value="650-699" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-blue-500 peer-checked:bg-blue-50">
+                                <span class="text-sm">Fair (650-699)</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="creditScore" value="600-649" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-yellow-500 peer-checked:bg-yellow-50">
+                                <span class="text-sm">Average (600-649)</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="creditScore" value="550-599" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-orange-500 peer-checked:bg-orange-50">
+                                <span class="text-sm">Below (550-599)</span>
+                            </div>
+                        </label>
+                        <label class="relative">
+                            <input type="radio" name="creditScore" value="<550" class="peer sr-only">
+                            <div class="p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 peer-checked:border-red-500 peer-checked:bg-red-50">
+                                <span class="text-sm">Challenged (<550)</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 3: Contact Information -->
+            <div id="stage3" class="space-y-5 hidden">
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Last step - Get your results!</h2>
+                <p class="text-sm text-gray-600 mb-5">We'll show your pre-qualification instantly</p>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+                    <input type="text" id="businessName" name="businessName" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="email" name="email" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Phone Number
+                        <span class="text-xs text-gray-500 font-normal">(For funding specialist to call)</span>
+                    </label>
+                    <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none form-input">
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="flex justify-between mt-8">
+                <button type="button" id="backBtn" class="hidden px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50">
+                    ← Back
+                </button>
+                <button type="button" id="continueBtn" class="ml-auto px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                    Continue →
+                </button>
+                <button type="submit" id="getResultsBtn" class="hidden ml-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-lg font-medium hover:opacity-90">
+                    Get My Results →
+                </button>
+            </div>
+        </form>
+        
+        <!-- Trust Elements -->
+        <div class="mt-8 flex items-center justify-center gap-4 opacity-60">
+            <img src="https://via.placeholder.com/80x30/E5E7EB/9CA3AF?text=BBB" alt="BBB" class="h-8">
+            <img src="https://via.placeholder.com/80x30/E5E7EB/9CA3AF?text=SSL" alt="SSL" class="h-8">
+            <img src="https://via.placeholder.com/100x30/E5E7EB/9CA3AF?text=TrustPilot" alt="TrustPilot" class="h-8">
+        </div>
+        
+        <!-- Results Message (Initially Hidden) -->
+        <div id="resultsMessage" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-8 max-w-md text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-500 success-checkmark" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Congratulations!</h3>
+                <p class="text-gray-600 mb-6">You've been matched with <strong id="matchCount">3</strong> funding options!</p>
+                <p class="text-sm text-gray-500 mb-6">A funding specialist will call you within the next hour to discuss your options.</p>
+                <button onclick="window.location.href='results.html'" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                    View My Options →
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Load Scripts -->
+    <script src="../../forms/underwriting-engine.js"></script>
+    <script src="../../forms/dynamic-lead-categorization.js"></script>
+    <script src="../../forms/recommendation-engine.js"></script>
+    <script src="../../forms/progressive-lead-capture.js"></script>
+    <script src="../../forms/lead-router.js"></script>
+    
+    <script>
+        // Initialize progressive capture
+        const progressiveCapture = new ProgressiveLeadCapture({
+            routeDelay: 30000, // Route after 30 seconds
+            enableBehaviorTracking: true,
+            webhookUrl: '/api/leads/progressive'
+        });
+        
+        // Form state
+        let currentStage = 1;
+        const totalStages = 3;
+        const formData = {};
+        
+        // DOM elements
+        const form = document.getElementById('quickQualifyForm');
+        const continueBtn = document.getElementById('continueBtn');
+        const backBtn = document.getElementById('backBtn');
+        const getResultsBtn = document.getElementById('getResultsBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        
+        // Stage management
+        function showStage(stage) {
+            // Hide all stages
+            for (let i = 1; i <= totalStages; i++) {
+                const stageEl = document.getElementById(`stage${i}`);
+                if (stageEl) stageEl.classList.add('hidden');
+            }
+            
+            // Show current stage
+            const currentStageEl = document.getElementById(`stage${stage}`);
+            if (currentStageEl) currentStageEl.classList.remove('hidden');
+            
+            // Update buttons
+            if (stage === 1) {
+                backBtn.classList.add('hidden');
+                continueBtn.classList.remove('hidden');
+                getResultsBtn.classList.add('hidden');
+            } else if (stage === totalStages) {
+                backBtn.classList.remove('hidden');
+                continueBtn.classList.add('hidden');
+                getResultsBtn.classList.remove('hidden');
+            } else {
+                backBtn.classList.remove('hidden');
+                continueBtn.classList.remove('hidden');
+                getResultsBtn.classList.add('hidden');
+            }
+            
+            // Update progress
+            updateProgress(stage);
+        }
+        
+        function updateProgress(stage) {
+            const progress = (stage / totalStages) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = Math.round(progress);
+        }
+        
+        // Validate current stage
+        function validateStage(stage) {
+            const stageEl = document.getElementById(`stage${stage}`);
+            const requiredFields = stageEl.querySelectorAll('[required], input[type="radio"]');
+            
+            let isValid = true;
+            const radioGroups = new Set();
+            
+            requiredFields.forEach(field => {
+                if (field.type === 'radio') {
+                    radioGroups.add(field.name);
+                } else if (!field.value) {
+                    field.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+            
+            // Check radio groups
+            radioGroups.forEach(groupName => {
+                const checked = stageEl.querySelector(`input[name="${groupName}"]:checked`);
+                if (!checked) {
+                    isValid = false;
+                }
+            });
+            
+            return isValid;
+        }
+        
+        // Save stage data
+        function saveStageData(stage) {
+            const stageEl = document.getElementById(`stage${stage}`);
+            const inputs = stageEl.querySelectorAll('input, select');
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    if (input.checked) {
+                        formData[input.name] = input.value;
+                    }
+                } else {
+                    formData[input.name] = input.value;
+                }
+            });
+        }
+        
+        // Navigation handlers
+        continueBtn.addEventListener('click', () => {
+            if (validateStage(currentStage)) {
+                saveStageData(currentStage);
+                currentStage++;
+                showStage(currentStage);
+                
+                // Check if we can route to MCA clients
+                if (currentStage === 2 && formData.monthlyRevenue && formData.timeInBusiness) {
+                    const revenue = parseInt(formData.monthlyRevenue.split('-')[0]);
+                    if (revenue >= 10000) {
+                        // Can route to MCA clients now!
+                        console.log('Ready to route to MCA clients');
+                    }
+                }
+            }
+        });
+        
+        backBtn.addEventListener('click', () => {
+            currentStage--;
+            showStage(currentStage);
+        });
+        
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (validateStage(currentStage)) {
+                saveStageData(currentStage);
+                
+                // Initialize engines
+                const underwritingEngine = new UnderwritingEngine();
+                const categorizationEngine = new DynamicLeadCategorization();
+                const recommendationEngine = new RecommendationEngine();
+                
+                // Evaluate lead
+                const evaluation = underwritingEngine.evaluateLead(formData);
+                const categorization = categorizationEngine.categorizeLead(evaluation, [], formData);
+                const recommendations = recommendationEngine.generateRecommendations(formData, evaluation, categorization);
+                
+                // Store results
+                sessionStorage.setItem('evaluationResults', JSON.stringify(evaluation));
+                sessionStorage.setItem('categorization', JSON.stringify(categorization));
+                sessionStorage.setItem('recommendations', JSON.stringify(recommendations));
+                
+                // Show success message
+                const qualifiedCount = evaluation.qualifiedProducts?.length || 0;
+                document.getElementById('matchCount').textContent = qualifiedCount;
+                document.getElementById('resultsMessage').classList.remove('hidden');
+                
+                // Route lead
+                const router = new LeadRouter();
+                await router.submitLead({
+                    ...formData,
+                    evaluation,
+                    categorization,
+                    recommendations
+                });
+            }
+        });
+        
+        // Currency formatting
+        document.getElementById('fundingAmount').addEventListener('blur', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value) {
+                e.target.value = '$' + parseInt(value).toLocaleString();
+            }
+        });
+        
+        // Phone formatting
+        document.getElementById('phone')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = `(${value}`;
+                } else if (value.length <= 6) {
+                    value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                } else {
+                    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                }
+            }
+            e.target.value = value;
+        });
+        
+        // Initialize
+        showStage(1);
+    </script>
+</body>
+</html>

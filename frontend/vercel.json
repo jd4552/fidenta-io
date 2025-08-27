@@ -1,0 +1,23 @@
+{
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/templates/business-loan/index-complete.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin-dashboard.html"
+    },
+    {
+      "source": "/pro",
+      "destination": "/index-professional.html"
+    },
+    {
+      "source": "/marketplace",
+      "destination": "/marketplace/index.html"
+    }
+  ]
+}

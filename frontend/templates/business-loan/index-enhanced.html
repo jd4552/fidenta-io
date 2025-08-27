@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Funding $10K-$5M | Same-Day Approval | No Collateral Required</title>
+    <meta name="description" content="Get $10,000 to $5 Million in business funding. Same-day approval, funds in 24 hours. Upload bank statements for instant pre-approval. Bad credit OK.">
+    
+    <!-- Performance: Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981', // Green for money/growth
+                        secondary: '#3B82F6', // Blue for trust
+                        urgent: '#EF4444', // Red for urgency
+                        gold: '#F59E0B', // Gold for premium
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom animations */
+        @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse-scale {
+            animation: pulse-scale 2s infinite;
+        }
+        
+        /* Progress bar styling */
+        .progress-bar {
+            background: linear-gradient(90deg, #10B981 0%, #3B82F6 100%);
+        }
+        
+        /* File upload styling */
+        .file-upload-area {
+            border: 2px dashed #CBD5E0;
+            transition: all 0.3s ease;
+        }
+        .file-upload-area:hover {
+            border-color: #10B981;
+            background-color: #F0FDF4;
+        }
+        .file-upload-area.dragover {
+            border-color: #3B82F6;
+            background-color: #EFF6FF;
+        }
+        
+        /* Mobile-optimized touch targets */
+        @media (max-width: 768px) {
+            .touch-target {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+        
+        /* Trust badge styling */
+        .trust-badge {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50">
+    
+    <!-- Trust Bar (Mobile: Sticky Top) -->
+    <div class="bg-gradient-to-r from-primary to-secondary text-white py-2 text-center text-sm md:text-base">
+        <div class="container mx-auto px-4 flex items-center justify-center gap-2 md:gap-4">
+            <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                Bank-Level Security
+            </span>
+            <span>|</span>
+            <span>✓ No Personal Guarantee</span>
+            <span class="hidden md:inline">|</span>
+            <span class="hidden md:inline">⚡ Same-Day Approval</span>
+        </div>
+    </div>
+    
+    <!-- Main Hero Section -->
+    <section class="py-8 md:py-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                
+                <!-- Left: Messaging -->
+                <div class="order-2 md:order-1">
+                    <!-- Live Funding Ticker -->
+                    <div class="inline-flex items-center gap-2 bg-gold/10 text-gold px-3 py-1 rounded-full text-sm font-medium mb-4">
+                        <span class="inline-block w-2 h-2 bg-gold rounded-full animate-pulse"></span>
+                        <span id="liveCounter">$2,847,500</span> funded today
+                    </div>
+                    
+                    <!-- Headline -->
+                    <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                        Get <span class="text-primary">$10K to $5 Million</span> for Your Business
+                    </h1>
+                    
+                    <!-- Subheadline -->
+                    <p class="text-lg md:text-xl text-gray-600 mb-6">
+                        Same-day approval. No collateral. Upload bank statements for instant pre-qualification.
+                    </p>
+                    
+                    <!-- Value Props with Icons -->
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start gap-3">
+                            <div class="bg-primary/10 p-1 rounded">
+                                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-900">Instant Pre-Qualification</span>
+                                <p class="text-sm text-gray-600">Upload statements for immediate decision</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-primary/10 p-1 rounded">
+                                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-900">Flexible Terms</span>
+                                <p class="text-sm text-gray-600">6-24 months, daily/weekly payments available</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="bg-primary/10 p-1 rounded">
+                                <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                    <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-gray-900">All Industries Welcome</span>
+                                <p class="text-sm text-gray-600">Retail, restaurants, services, contractors & more</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <!-- Social Proof with Real Numbers -->
+                    <div class="bg-gray-100 rounded-lg p-4 mb-6">
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-primary">50,000+</div>
+                                <div class="text-xs text-gray-600">Businesses Funded</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-primary">$2.5B</div>
+                                <div class="text-xs text-gray-600">Total Funded</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-primary">4.8★</div>
+                                <div class="text-xs text-gray-600">Avg Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trust Badges -->
+                    <div class="flex items-center gap-4">
+                        <!-- BBB A+ Badge -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-16 h-12 trust-badge" viewBox="0 0 120 90" fill="none">
+                                <rect width="120" height="90" rx="8" fill="#005A9C"/>
+                                <text x="60" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">BBB</text>
+                                <text x="60" y="55" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="white">ACCREDITED</text>
+                                <text x="60" y="75" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#FFD700">A+</text>
+                            </svg>
+                        </div>
+                        
+                        <!-- Trustpilot Badge -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-20 h-12 trust-badge" viewBox="0 0 140 90" fill="none">
+                                <rect width="140" height="90" rx="8" fill="#00B67A"/>
+                                <text x="70" y="30" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Trustpilot</text>
+                                <g transform="translate(30, 40)">
+                                    <path d="M10 2 L12 8 L18 8 L13 12 L15 18 L10 14 L5 18 L7 12 L2 8 L8 8 Z" fill="#FFD700"/>
+                                    <path d="M26 2 L28 8 L34 8 L29 12 L31 18 L26 14 L21 18 L23 12 L18 8 L24 8 Z" fill="#FFD700"/>
+                                    <path d="M42 2 L44 8 L50 8 L45 12 L47 18 L42 14 L37 18 L39 12 L34 8 L40 8 Z" fill="#FFD700"/>
+                                    <path d="M58 2 L60 8 L66 8 L61 12 L63 18 L58 14 L53 18 L55 12 L50 8 L56 8 Z" fill="#FFD700"/>
+                                    <path d="M74 2 L76 8 L82 8 L77 12 L79 18 L74 14 L69 18 L71 12 L66 8 L72 8 Z" fill="#FFD700"/>
+                                </g>
+                                <text x="70" y="75" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="white">4.8/5 • 12,847 Reviews</text>
+                            </svg>
+                        </div>
+                        
+                        <!-- Inc 5000 Badge -->
+                        <div class="flex flex-col items-center">
+                            <svg class="w-16 h-12 trust-badge" viewBox="0 0 120 90" fill="none">
+                                <rect width="120" height="90" rx="8" fill="#FF6900"/>
+                                <text x="60" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">INC.</text>
+                                <text x="60" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">5000</text>
+                                <text x="60" y="70" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="white">2024 HONOREE</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Multi-Step Form -->
+                <div class="order-1 md:order-2">
+                    <div class="bg-white rounded-xl shadow-xl p-6 md:p-8">
+                        <!-- Form Header -->
+                        <div class="text-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2">Get Pre-Qualified Now</h2>
+                            <p class="text-gray-600">Takes 3 minutes • No impact to credit</p>
+                        </div>
+                        
+                        <!-- Progress Indicator -->
+                        <div class="mb-6">
+                            <div class="flex justify-between text-xs text-gray-500 mb-2">
+                                <span id="stepLabel">Step 1 of 4 - Business Info</span>
+                                <span id="progressPercent">25%</span>
+                            </div>
+                            <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div id="progressBar" class="progress-bar h-full rounded-full transition-all duration-500" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Multi-Step Form -->
+                        <form id="mcaLeadForm" class="space-y-4">
+                            
+                            <!-- Step 1: Business Information -->
+                            <div id="step1" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Business Name *</label>
+                                    <input type="text" name="businessName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Industry Type *</label>
+                                    <select name="industryType" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Select your industry</option>
+                                        <option value="restaurant">Restaurant/Food Service</option>
+                                        <option value="retail">Retail Store</option>
+                                        <option value="construction">Construction/Contractor</option>
+                                        <option value="medical">Medical/Healthcare</option>
+                                        <option value="automotive">Automotive/Repair</option>
+                                        <option value="trucking">Trucking/Transportation</option>
+                                        <option value="ecommerce">E-commerce</option>
+                                        <option value="services">Professional Services</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="wholesale">Wholesale/Distribution</option>
+                                        <option value="other">Other Business</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Years in Business *</label>
+                                        <select name="yearsInBusiness" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                            <option value="">Select</option>
+                                            <option value="0-6months">Less than 6 months</option>
+                                            <option value="6-12months">6-12 months</option>
+                                            <option value="1-2years">1-2 years</option>
+                                            <option value="2-5years">2-5 years</option>
+                                            <option value="5-10years">5-10 years</option>
+                                            <option value="10+years">10+ years</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Entity Type *</label>
+                                        <select name="entityType" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                            <option value="">Select</option>
+                                            <option value="llc">LLC</option>
+                                            <option value="corp">Corporation</option>
+                                            <option value="scorp">S-Corp</option>
+                                            <option value="partnership">Partnership</option>
+                                            <option value="sole">Sole Proprietor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Business Address *</label>
+                                    <input type="text" name="businessAddress" placeholder="Street Address" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary mb-2">
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <input type="text" name="city" placeholder="City" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <input type="text" name="state" placeholder="State" maxlength="2" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                            <input type="text" name="zip" placeholder="ZIP" required class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2: Financial Information -->
+                            <div id="step2" class="space-y-4 hidden">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Average Monthly Revenue *</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-3 text-gray-500">$</span>
+                                        <input type="text" name="monthlyRevenue" placeholder="50,000" required class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Average gross monthly revenue (last 3 months)</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Requested Funding Amount *</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button type="button" class="funding-amount py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary text-sm font-medium" data-amount="10000-25000">$10K - $25K</button>
+                                        <button type="button" class="funding-amount py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary text-sm font-medium" data-amount="25000-50000">$25K - $50K</button>
+                                        <button type="button" class="funding-amount py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary text-sm font-medium" data-amount="50000-100000">$50K - $100K</button>
+                                        <button type="button" class="funding-amount py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary text-sm font-medium" data-amount="100000-250000">$100K - $250K</button>
+                                        <button type="button" class="funding-amount py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary text-sm font-medium" data-amount="250000-500000">$250K - $500K</button>
+                                        <button type="button" class="funding-amount py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary text-sm font-medium" data-amount="500000+">$500K+</button>
+                                    </div>
+                                    <input type="hidden" name="fundingAmount" required>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Use of Funds *</label>
+                                    <select name="useOfFunds" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Select primary use</option>
+                                        <option value="expansion">Business Expansion</option>
+                                        <option value="equipment">Equipment Purchase</option>
+                                        <option value="inventory">Inventory</option>
+                                        <option value="marketing">Marketing/Advertising</option>
+                                        <option value="renovation">Renovation/Remodel</option>
+                                        <option value="working-capital">Working Capital</option>
+                                        <option value="payroll">Payroll</option>
+                                        <option value="debt-consolidation">Debt Consolidation</option>
+                                        <option value="emergency">Emergency Expenses</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Current Business Debt?</label>
+                                    <select name="hasBusinessDebt" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="none">No existing business debt</option>
+                                        <option value="under-10k">Less than $10,000</option>
+                                        <option value="10k-50k">$10,000 - $50,000</option>
+                                        <option value="50k-100k">$50,000 - $100,000</option>
+                                        <option value="over-100k">Over $100,000</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Credit Score Range</label>
+                                    <select name="creditScore" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Prefer not to say</option>
+                                        <option value="excellent">Excellent (720+)</option>
+                                        <option value="good">Good (680-719)</option>
+                                        <option value="fair">Fair (620-679)</option>
+                                        <option value="poor">Poor (Below 620)</option>
+                                        <option value="unknown">Not Sure</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Contact Information -->
+                            <div id="step3" class="space-y-4 hidden">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                                        <input type="text" name="firstName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                                        <input type="text" name="lastName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Business Phone *</label>
+                                    <input type="tel" name="businessPhone" placeholder="(555) 123-4567" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Mobile Phone</label>
+                                    <input type="tel" name="mobilePhone" placeholder="(555) 123-4567" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                                    <input type="email" name="email" placeholder="owner@business.com" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Best Time to Call</label>
+                                    <select name="bestTimeToCall" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="morning">Morning (9am - 12pm)</option>
+                                        <option value="afternoon">Afternoon (12pm - 5pm)</option>
+                                        <option value="evening">Evening (5pm - 8pm)</option>
+                                        <option value="anytime">Anytime</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">How Soon Do You Need Funding? *</label>
+                                    <select name="urgency" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="">Select timeframe</option>
+                                        <option value="immediately">Immediately (Today/Tomorrow)</option>
+                                        <option value="week">Within a Week</option>
+                                        <option value="month">Within a Month</option>
+                                        <option value="planning">Just Planning Ahead</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 4: Documents (Optional but Recommended) -->
+                            <div id="step4" class="space-y-4 hidden">
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                                    <h3 class="font-semibold text-green-900 mb-2">Speed Up Your Approval!</h3>
+                                    <p class="text-sm text-green-700">Upload your last 3 months of bank statements for instant pre-qualification and the best rates. This step is optional but highly recommended.</p>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Bank Statements (Optional)</label>
+                                    <div id="fileUploadArea" class="file-upload-area rounded-lg p-6 text-center cursor-pointer">
+                                        <svg class="mx-auto h-12 w-12 text-gray-400 mb-3" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        <p class="text-sm text-gray-600 mb-1">Click to upload or drag and drop</p>
+                                        <p class="text-xs text-gray-500">PDF, JPG, PNG up to 10MB each</p>
+                                        <input type="file" id="bankStatements" name="bankStatements" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                                    </div>
+                                    <div id="uploadedFiles" class="mt-3 space-y-2"></div>
+                                </div>
+                                
+                                <div>
+                                    <label class="flex items-start gap-2">
+                                        <input type="checkbox" name="skipDocuments" class="mt-1 rounded border-gray-300 text-primary focus:ring-primary">
+                                        <span class="text-sm text-gray-600">Skip document upload for now (you can provide them later, but pre-qualification will take longer)</span>
+                                    </label>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <h4 class="font-medium text-gray-900 mb-2">Why Upload Bank Statements?</h4>
+                                    <ul class="space-y-1 text-sm text-gray-600">
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-primary">✓</span>
+                                            <span>Get pre-qualified in minutes, not days</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-primary">✓</span>
+                                            <span>Receive the best rates available</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-primary">✓</span>
+                                            <span>Skip back-and-forth document requests</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-primary">✓</span>
+                                            <span>Bank-level encryption keeps your data safe</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <label class="flex items-start gap-2">
+                                        <input type="checkbox" name="consent" required class="mt-1 rounded border-gray-300 text-primary focus:ring-primary">
+                                        <span class="text-sm text-gray-600">I consent to receive calls, texts, and emails regarding my funding application. I understand this is not a commitment to accept any offer. <a href="#" class="text-primary underline">Terms & Privacy Policy</a></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation Buttons -->
+                            <div class="flex gap-3">
+                                <button type="button" id="prevBtn" class="hidden flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                                    ← Previous
+                                </button>
+                                <button type="button" id="nextBtn" class="flex-1 bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors">
+                                    Continue →
+                                </button>
+                                <button type="submit" id="submitBtn" class="hidden flex-1 bg-primary text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-600 transition-all transform hover:scale-105 pulse-scale">
+                                    Get My Pre-Qualification →
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Security Note -->
+                        <div class="mt-6 pt-6 border-t border-gray-200 text-center">
+                            <p class="text-xs text-gray-500 flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                Your information is secure and encrypted
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- Secondary Benefits Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Why 50,000+ Businesses Choose Us</h2>
+                <p class="text-gray-600">Fast funding when traditional banks say no</p>
+            </div>
+            
+            <!-- Benefits Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Same-Day Approval</h3>
+                    <p class="text-gray-600 text-sm">Get approved today, funded tomorrow. No waiting weeks for an answer.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                            <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Flexible Repayment</h3>
+                    <p class="text-gray-600 text-sm">Daily, weekly, or monthly options. Terms that work with your cash flow.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Bad Credit OK</h3>
+                    <p class="text-gray-600 text-sm">We look at your revenue, not just your credit score. 550+ considered.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Mobile Sticky CTA -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 shadow-lg">
+        <button onclick="scrollToForm()" class="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold touch-target">
+            Get Pre-Qualified Now →
+        </button>
+    </div>
+    
+    <!-- Form Logic Script -->
+    <script>
+        // Form state management
+        let currentStep = 1;
+        const totalSteps = 4;
+        const formData = {};
+        const uploadedFilesList = [];
+        
+        // Step labels for progress indicator
+        const stepLabels = {
+            1: 'Business Info',
+            2: 'Financial Details',
+            3: 'Contact Info',
+            4: 'Documents (Optional)'
+        };
+        
+        // Update progress bar
+        function updateProgress() {
+            const percent = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressPercent').textContent = Math.round(percent) + '%';
+            document.getElementById('stepLabel').textContent = `Step ${currentStep} of ${totalSteps} - ${stepLabels[currentStep]}`;
+        }
+        
+        // Show/hide steps
+        function showStep(step) {
+            // Hide all steps
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step${i}`).classList.add('hidden');
+            }
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.remove('hidden');
+            
+            // Update buttons
+            document.getElementById('prevBtn').classList.toggle('hidden', step === 1);
+            document.getElementById('nextBtn').classList.toggle('hidden', step === totalSteps);
+            document.getElementById('submitBtn').classList.toggle('hidden', step !== totalSteps);
+            
+            updateProgress();
+        }
+        
+        // Validate current step
+        function validateStep(step) {
+            const stepElement = document.getElementById(`step${step}`);
+            const requiredFields = stepElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value) {
+                    field.focus();
+                    field.classList.add('border-red-500');
+                    return false;
+                }
+                field.classList.remove('border-red-500');
+            }
+            
+            return true;
+        }
+        
+        // Save step data
+        function saveStepData(step) {
+            const stepElement = document.getElementById(`step${step}`);
+            const inputs = stepElement.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                if (input.name) {
+                    if (input.type === 'checkbox') {
+                        formData[input.name] = input.checked;
+                    } else {
+                        formData[input.name] = input.value;
+                    }
+                }
+            });
+        }
+        
+        // Next button handler
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (validateStep(currentStep)) {
+                saveStepData(currentStep);
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+        
+        // Previous button handler
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            saveStepData(currentStep);
+            currentStep--;
+            showStep(currentStep);
+        });
+        
+        // Funding amount button handlers
+        document.querySelectorAll('.funding-amount').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active state from all
+                document.querySelectorAll('.funding-amount').forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white');
+                    b.classList.add('border-gray-300');
+                });
+                
+                // Add active state to clicked
+                this.classList.remove('border-gray-300');
+                this.classList.add('bg-primary', 'text-white');
+                
+                // Set hidden input value
+                document.querySelector('input[name="fundingAmount"]').value = this.dataset.amount;
+            });
+        });
+        
+        // File upload handling
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('bankStatements');
+        const uploadedFilesDiv = document.getElementById('uploadedFiles');
+        
+        fileUploadArea.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', function(e) {
+            handleFiles(e.target.files);
+        });
+        
+        // Drag and drop
+        fileUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+        
+        fileUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+        
+        fileUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        function handleFiles(files) {
+            for (let file of files) {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size must be less than 10MB');
+                    continue;
+                }
+                
+                uploadedFilesList.push(file);
+                
+                // Display uploaded file
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'flex items-center justify-between bg-gray-50 p-2 rounded-lg';
+                fileDiv.innerHTML = `
+                    <span class="text-sm text-gray-600">${file.name}</span>
+                    <button type="button" onclick="removeFile(${uploadedFilesList.length - 1})" class="text-red-500 hover:text-red-700">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                `;
+                uploadedFilesDiv.appendChild(fileDiv);
+            }
+        }
+        
+        function removeFile(index) {
+            uploadedFilesList.splice(index, 1);
+            refreshFileDisplay();
+        }
+        
+        function refreshFileDisplay() {
+            uploadedFilesDiv.innerHTML = '';
+            uploadedFilesList.forEach((file, index) => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'flex items-center justify-between bg-gray-50 p-2 rounded-lg';
+                fileDiv.innerHTML = `
+                    <span class="text-sm text-gray-600">${file.name}</span>
+                    <button type="button" onclick="removeFile(${index})" class="text-red-500 hover:text-red-700">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                `;
+                uploadedFilesDiv.appendChild(fileDiv);
+            });
+        }
+        
+        // Form submission
+        document.getElementById('mcaLeadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateStep(currentStep)) {
+                return;
+            }
+            
+            saveStepData(currentStep);
+            
+            // Add files to form data
+            formData.bankStatements = uploadedFilesList;
+            
+            // Here you would submit to your lead routing system
+            console.log('Form Data:', formData);
+            
+            // Show success message
+            alert('Thank you! Your pre-qualification request has been submitted. A funding specialist will contact you within 1 hour during business hours.');
+            
+            // In production, you would redirect to a thank you page or show a success modal
+        });
+        
+        // Scroll to form function for mobile CTA
+        function scrollToForm() {
+            document.getElementById('mcaLeadForm').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Live counter animation
+        function animateCounter() {
+            const counter = document.getElementById('liveCounter');
+            let current = 2847500;
+            
+            setInterval(() => {
+                current += Math.floor(Math.random() * 10000) + 5000;
+                counter.textContent = '$' + current.toLocaleString();
+            }, 30000); // Update every 30 seconds
+        }
+        
+        animateCounter();
+        
+        // Phone number formatting
+        document.querySelectorAll('input[type="tel"]').forEach(input => {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 6) {
+                    value = `(${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6,10)}`;
+                } else if (value.length >= 3) {
+                    value = `(${value.slice(0,3)}) ${value.slice(3)}`;
+                }
+                e.target.value = value;
+            });
+        });
+        
+        // Currency formatting for revenue input
+        document.querySelector('input[name="monthlyRevenue"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value) {
+                value = parseInt(value).toLocaleString();
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

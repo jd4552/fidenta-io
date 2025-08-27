@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidenta - Internal Lead Dashboard</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .lead-card {
+            transition: all 0.3s ease;
+        }
+        .lead-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .status-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Lead Management Dashboard</h1>
+                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                        <span id="liveLeadCount">0</span> Live Leads
+                    </span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="refreshDashboard()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        🔄 Refresh
+                    </button>
+                    <button onclick="exportLeads()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        📥 Export CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Dashboard -->
+    <div class="flex h-screen pt-16">
+        
+        <!-- Sidebar Filters -->
+        <aside class="w-64 bg-white border-r p-6 overflow-y-auto">
+            <h3 class="font-semibold text-gray-900 mb-4">Filters</h3>
+            
+            <!-- Lead Grade Filter -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Lead Grade</label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="A+" checked> 
+                        <span class="text-sm">A+ Premium</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="A" checked> 
+                        <span class="text-sm">A High Quality</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="B+" checked> 
+                        <span class="text-sm">B+ Good</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="B" checked> 
+                        <span class="text-sm">B Standard</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="C+"> 
+                        <span class="text-sm">C+ Fair</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="C"> 
+                        <span class="text-sm">C Average</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2" value="D"> 
+                        <span class="text-sm">D Credit Repair</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Urgency Filter -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Urgency</label>
+                <select class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <option value="all">All Urgencies</option>
+                    <option value="immediate">🔥 ASAP (24-48hrs)</option>
+                    <option value="week">⚡ This Week</option>
+                    <option value="month">📅 This Month</option>
+                    <option value="planning">💭 Planning</option>
+                </select>
+            </div>
+            
+            <!-- Product Filter -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Qualified Products</label>
+                <select class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <option value="all">All Products</option>
+                    <option value="term">Term Loan</option>
+                    <option value="mca">MCA</option>
+                    <option value="sba">SBA Loan</option>
+                    <option value="loc">Line of Credit</option>
+                    <option value="equipment">Equipment Financing</option>
+                    <option value="invoice">Invoice Factoring</option>
+                </select>
+            </div>
+            
+            <!-- Document Status -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Documents</label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="docs" class="mr-2" value="all" checked> 
+                        <span class="text-sm">All Leads</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="docs" class="mr-2" value="with"> 
+                        <span class="text-sm">With Documents</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="docs" class="mr-2" value="without"> 
+                        <span class="text-sm">No Documents</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Date Range -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
+                <select class="w-full border border-gray-300 rounded-lg px-3 py-2">
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="week">Last 7 Days</option>
+                    <option value="month">Last 30 Days</option>
+                </select>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            
+            <!-- Stats Cards -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Today's Leads</p>
+                                <p class="text-2xl font-bold text-gray-900" id="todayLeads">47</p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100 4h2a1 1 0 100 2 2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-xs text-green-600 mt-2">↑ 23% from yesterday</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Hot Leads (ASAP)</p>
+                                <p class="text-2xl font-bold text-red-600" id="hotLeads">12</p>
+                            </div>
+                            <div class="bg-red-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2">Need immediate attention</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">A+ Leads</p>
+                                <p class="text-2xl font-bold text-green-600" id="premiumLeads">8</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2">Premium quality leads</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">With Documents</p>
+                                <p class="text-2xl font-bold text-purple-600" id="docsLeads">15</p>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-2">Ready for fast processing</p>
+                    </div>
+                </div>
+                
+                <!-- Lead Table -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-semibold text-gray-900">Lead Queue</h2>
+                            <div class="flex items-center space-x-4">
+                                <select class="border border-gray-300 rounded-lg px-3 py-1 text-sm">
+                                    <option>Sort by: Newest First</option>
+                                    <option>Sort by: Score (High to Low)</option>
+                                    <option>Sort by: Urgency</option>
+                                    <option>Sort by: Funding Amount</option>
+                                </select>
+                                <button onclick="routeSelectedLeads()" class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700">
+                                    Route Selected
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <input type="checkbox" id="selectAll" class="rounded">
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lead Info</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score/Grade</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Funding</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualified For</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="leadTableBody">
+                                <!-- Leads will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Right Panel - Lead Details -->
+        <aside id="leadDetailsPanel" class="w-96 bg-white border-l p-6 overflow-y-auto hidden">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900">Lead Details</h3>
+                <button onclick="closeDetailsPanel()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="leadDetailsContent">
+                <!-- Lead details will be populated here -->
+            </div>
+        </aside>
+    </div>
+    
+    <!-- Lead Routing Modal -->
+    <div id="routingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-8 max-w-2xl w-full mx-4">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Route Leads to Partners</h3>
+            
+            <div class="mb-6">
+                <p class="text-sm text-gray-600 mb-4">Select partners to route <span id="selectedLeadCount">0</span> lead(s) to:</p>
+                
+                <div class="space-y-3 max-h-96 overflow-y-auto">
+                    <!-- MCA Partners -->
+                    <div class="border rounded-lg p-4">
+                        <label class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3" value="mca-capital-stack">
+                            <div>
+                                <div class="font-semibold">Capital Stack (MCA)</div>
+                                <div class="text-sm text-gray-600">Accepts: 500+ credit, $10K+ revenue</div>
+                                <div class="text-sm text-green-600">Payout: $75-$150 per lead</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <label class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3" value="mca-fast-advance">
+                            <div>
+                                <div class="font-semibold">Fast Advance (MCA)</div>
+                                <div class="text-sm text-gray-600">Accepts: 550+ credit, 24hr funding</div>
+                                <div class="text-sm text-green-600">Payout: $100-$200 per lead</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- Term Loan Partners -->
+                    <div class="border rounded-lg p-4">
+                        <label class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3" value="term-bluevine">
+                            <div>
+                                <div class="font-semibold">BlueVine (Term/LOC)</div>
+                                <div class="text-sm text-gray-600">Accepts: 650+ credit, $100K+ revenue</div>
+                                <div class="text-sm text-green-600">Payout: $150-$300 per lead</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <label class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3" value="term-ondeck">
+                            <div>
+                                <div class="font-semibold">OnDeck (Term)</div>
+                                <div class="text-sm text-gray-600">Accepts: 600+ credit, 1yr+ in business</div>
+                                <div class="text-sm text-green-600">Payout: $125-$250 per lead</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- SBA Partners -->
+                    <div class="border rounded-lg p-4">
+                        <label class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3" value="sba-smartbiz">
+                            <div>
+                                <div class="font-semibold">SmartBiz (SBA)</div>
+                                <div class="text-sm text-gray-600">Accepts: 680+ credit, 2yr+ in business</div>
+                                <div class="text-sm text-green-600">Payout: $200-$500 per lead</div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- Credit Repair Partners -->
+                    <div class="border rounded-lg p-4">
+                        <label class="flex items-start">
+                            <input type="checkbox" class="mt-1 mr-3" value="credit-lexington">
+                            <div>
+                                <div class="font-semibold">Lexington Law (Credit Repair)</div>
+                                <div class="text-sm text-gray-600">Accepts: Under 580 credit</div>
+                                <div class="text-sm text-green-600">Payout: $125 per lead</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="closeRoutingModal()" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button onclick="confirmRouting()" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                    Route Leads
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sample lead data (in production, this would come from your database)
+        const sampleLeads = [
+            {
+                id: 'L-001',
+                businessName: 'Tech Solutions Inc',
+                contactName: 'John Smith',
+                email: 'john@techsolutions.com',
+                phone: '(555) 123-4567',
+                monthlyRevenue: 150000,
+                fundingAmount: 250000,
+                creditScore: 720,
+                timeInBusiness: '2-5 years',
+                grade: 'A+',
+                score: 92,
+                urgency: 'immediate',
+                qualifiedProducts: ['Term Loan', 'SBA', 'Line of Credit'],
+                hasDocuments: true,
+                createdAt: new Date().toISOString(),
+                status: 'new',
+                businessType: 'technology',
+                fundingPurpose: 'expansion',
+                creditCardAcceptance: 'yes-high'
+            },
+            {
+                id: 'L-002',
+                businessName: 'Restaurant Group LLC',
+                contactName: 'Maria Garcia',
+                email: 'maria@restaurantgroup.com',
+                phone: '(555) 234-5678',
+                monthlyRevenue: 80000,
+                fundingAmount: 100000,
+                creditScore: 580,
+                timeInBusiness: '1-2 years',
+                grade: 'B',
+                score: 65,
+                urgency: 'week',
+                qualifiedProducts: ['MCA'],
+                hasDocuments: false,
+                createdAt: new Date(Date.now() - 3600000).toISOString(),
+                status: 'new',
+                businessType: 'restaurant',
+                fundingPurpose: 'working-capital',
+                creditCardAcceptance: 'yes-high'
+            },
+            {
+                id: 'L-003',
+                businessName: 'Construction Pro',
+                contactName: 'Mike Johnson',
+                email: 'mike@constructionpro.com',
+                phone: '(555) 345-6789',
+                monthlyRevenue: 200000,
+                fundingAmount: 500000,
+                creditScore: 680,
+                timeInBusiness: '5+ years',
+                grade: 'A',
+                score: 85,
+                urgency: 'month',
+                qualifiedProducts: ['Term Loan', 'Equipment Financing'],
+                hasDocuments: true,
+                createdAt: new Date(Date.now() - 7200000).toISOString(),
+                status: 'contacted',
+                businessType: 'construction',
+                fundingPurpose: 'equipment',
+                creditCardAcceptance: 'no'
+            }
+        ];
+        
+        let selectedLeads = new Set();
+        let currentLeads = [...sampleLeads];
+        
+        // Initialize dashboard
+        function initDashboard() {
+            renderLeadTable();
+            updateStats();
+            setupEventListeners();
+        }
+        
+        // Render lead table
+        function renderLeadTable() {
+            const tbody = document.getElementById('leadTableBody');
+            tbody.innerHTML = '';
+            
+            currentLeads.forEach(lead => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 cursor-pointer';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <input type="checkbox" class="lead-checkbox rounded" data-lead-id="${lead.id}">
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div>
+                            <div class="text-sm font-medium text-gray-900">${lead.businessName}</div>
+                            <div class="text-sm text-gray-500">${lead.contactName}</div>
+                            <div class="text-xs text-gray-400">${formatTime(lead.createdAt)}</div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-center">
+                            <div class="text-lg font-bold">${lead.score}</div>
+                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getGradeBadgeClass(lead.grade)}">
+                                ${lead.grade}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div>
+                            <div class="text-sm font-medium">$${lead.fundingAmount.toLocaleString()}</div>
+                            <div class="text-xs text-gray-500">Rev: $${lead.monthlyRevenue.toLocaleString()}/mo</div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-wrap gap-1">
+                            ${lead.qualifiedProducts.map(product => 
+                                `<span class="inline-flex px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded">${product}</span>`
+                            ).join('')}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-2">
+                            ${getStatusBadge(lead.status)}
+                            ${lead.urgency === 'immediate' ? '<span class="text-red-500 text-xs font-bold">🔥 HOT</span>' : ''}
+                            ${lead.hasDocuments ? '<span class="text-green-500 text-xs">📄</span>' : ''}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="viewLeadDetails('${lead.id}')" class="text-blue-600 hover:text-blue-800 mr-3">View</button>
+                        <button onclick="routeSingleLead('${lead.id}')" class="text-green-600 hover:text-green-800">Route</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Get grade badge class
+        function getGradeBadgeClass(grade) {
+            const classes = {
+                'A+': 'bg-green-100 text-green-800',
+                'A': 'bg-green-100 text-green-800',
+                'B+': 'bg-blue-100 text-blue-800',
+                'B': 'bg-blue-100 text-blue-800',
+                'C+': 'bg-yellow-100 text-yellow-800',
+                'C': 'bg-yellow-100 text-yellow-800',
+                'D': 'bg-red-100 text-red-800'
+            };
+            return classes[grade] || 'bg-gray-100 text-gray-800';
+        }
+        
+        // Get status badge
+        function getStatusBadge(status) {
+            const badges = {
+                'new': '<span class="px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">New</span>',
+                'contacted': '<span class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">Contacted</span>',
+                'routed': '<span class="px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded-full">Routed</span>',
+                'closed': '<span class="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">Closed</span>'
+            };
+            return badges[status] || badges['new'];
+        }
+        
+        // Format time
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            return date.toLocaleDateString();
+        }
+        
+        // View lead details
+        function viewLeadDetails(leadId) {
+            const lead = currentLeads.find(l => l.id === leadId);
+            if (!lead) return;
+            
+            const panel = document.getElementById('leadDetailsPanel');
+            const content = document.getElementById('leadDetailsContent');
+            
+            content.innerHTML = `
+                <div class="space-y-6">
+                    <!-- Score Card -->
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-6">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold">${lead.score}</div>
+                            <div class="text-lg mt-2">Grade: ${lead.grade}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Info -->
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-3">Business Information</h4>
+                        <dl class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Business Name:</dt>
+                                <dd class="font-medium">${lead.businessName}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Type:</dt>
+                                <dd class="font-medium">${lead.businessType}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Time in Business:</dt>
+                                <dd class="font-medium">${lead.timeInBusiness}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Monthly Revenue:</dt>
+                                <dd class="font-medium">$${lead.monthlyRevenue.toLocaleString()}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    
+                    <!-- Funding Details -->
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-3">Funding Request</h4>
+                        <dl class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Amount Needed:</dt>
+                                <dd class="font-medium">$${lead.fundingAmount.toLocaleString()}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Purpose:</dt>
+                                <dd class="font-medium">${lead.fundingPurpose}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Urgency:</dt>
+                                <dd class="font-medium">${lead.urgency}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Credit Score:</dt>
+                                <dd class="font-medium">${lead.creditScore}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-3">Contact Information</h4>
+                        <dl class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Name:</dt>
+                                <dd class="font-medium">${lead.contactName}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Email:</dt>
+                                <dd class="font-medium">${lead.email}</dd>
+                            </div>
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Phone:</dt>
+                                <dd class="font-medium">${lead.phone}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="space-y-3">
+                        <button onclick="callLead('${lead.phone}')" class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            📞 Call Lead
+                        </button>
+                        <button onclick="emailLead('${lead.email}')" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            ✉️ Send Email
+                        </button>
+                        <button onclick="routeSingleLead('${lead.id}')" class="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            🚀 Route to Partner
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            panel.classList.remove('hidden');
+        }
+        
+        // Close details panel
+        function closeDetailsPanel() {
+            document.getElementById('leadDetailsPanel').classList.add('hidden');
+        }
+        
+        // Route single lead
+        function routeSingleLead(leadId) {
+            selectedLeads.clear();
+            selectedLeads.add(leadId);
+            openRoutingModal();
+        }
+        
+        // Route selected leads
+        function routeSelectedLeads() {
+            const checkboxes = document.querySelectorAll('.lead-checkbox:checked');
+            selectedLeads.clear();
+            checkboxes.forEach(cb => selectedLeads.add(cb.dataset.leadId));
+            
+            if (selectedLeads.size === 0) {
+                alert('Please select at least one lead to route');
+                return;
+            }
+            
+            openRoutingModal();
+        }
+        
+        // Open routing modal
+        function openRoutingModal() {
+            document.getElementById('selectedLeadCount').textContent = selectedLeads.size;
+            document.getElementById('routingModal').classList.remove('hidden');
+        }
+        
+        // Close routing modal
+        function closeRoutingModal() {
+            document.getElementById('routingModal').classList.add('hidden');
+        }
+        
+        // Confirm routing
+        function confirmRouting() {
+            const selectedPartners = [];
+            document.querySelectorAll('#routingModal input[type="checkbox"]:checked').forEach(cb => {
+                selectedPartners.push(cb.value);
+            });
+            
+            if (selectedPartners.length === 0) {
+                alert('Please select at least one partner');
+                return;
+            }
+            
+            // In production, this would send to your API
+            console.log('Routing leads:', Array.from(selectedLeads), 'to partners:', selectedPartners);
+            
+            alert(`Successfully routed ${selectedLeads.size} lead(s) to ${selectedPartners.length} partner(s)`);
+            closeRoutingModal();
+            
+            // Update lead status
+            currentLeads.forEach(lead => {
+                if (selectedLeads.has(lead.id)) {
+                    lead.status = 'routed';
+                }
+            });
+            
+            renderLeadTable();
+        }
+        
+        // Update stats
+        function updateStats() {
+            document.getElementById('liveLeadCount').textContent = currentLeads.filter(l => l.status === 'new').length;
+            document.getElementById('todayLeads').textContent = currentLeads.length;
+            document.getElementById('hotLeads').textContent = currentLeads.filter(l => l.urgency === 'immediate').length;
+            document.getElementById('premiumLeads').textContent = currentLeads.filter(l => l.grade === 'A+' || l.grade === 'A').length;
+            document.getElementById('docsLeads').textContent = currentLeads.filter(l => l.hasDocuments).length;
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            document.getElementById('selectAll')?.addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.lead-checkbox');
+                checkboxes.forEach(cb => cb.checked = this.checked);
+            });
+        }
+        
+        // Export leads to CSV
+        function exportLeads() {
+            // In production, this would generate actual CSV
+            alert('Exporting leads to CSV...');
+        }
+        
+        // Refresh dashboard
+        function refreshDashboard() {
+            // In production, this would fetch new data from API
+            renderLeadTable();
+            updateStats();
+        }
+        
+        // Call lead
+        function callLead(phone) {
+            window.location.href = `tel:${phone}`;
+        }
+        
+        // Email lead
+        function emailLead(email) {
+            window.location.href = `mailto:${email}`;
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

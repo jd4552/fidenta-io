@@ -1,0 +1,203 @@
+<!-- Fidenta.io deployment pending: API will move to https://fidenta.netlify.app -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidenta - Admin Tools & Navigation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Fidenta Admin Tools</h1>
+            <p class="text-gray-600">Quick access to all system components</p>
+            <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                <p class="text-sm text-green-800">
+                    <strong>System Status:</strong> ✅ Operational | 
+                    <strong>Backend:</strong> Connected | 
+                    <strong>Database:</strong> MongoDB Atlas Active
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Navigation Grid -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Public Pages -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-blue-600 mb-4">🌐 Public Pages</h2>
+                <div class="space-y-3">
+                    <a href="index-professional.html" class="link-card block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                        <div class="font-semibold">Main Hub</div>
+                        <div class="text-sm text-gray-600">Professional navigation page</div>
+                    </a>
+                    <a href="templates/business-loan/index-complete.html" class="link-card block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                        <div class="font-semibold">Lead Generation Form</div>
+                        <div class="text-sm text-gray-600">Multi-step application form</div>
+                    </a>
+                    <a href="marketplace/index.html" class="link-card block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+                        <div class="font-semibold">Broker Marketplace</div>
+                        <div class="text-sm text-gray-600">Lead purchasing platform</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Admin Tools -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-green-600 mb-4">🔧 Admin Tools</h2>
+                <div class="space-y-3">
+                    <a href="admin-dashboard.html" class="link-card block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                        <div class="font-semibold">Lead Dashboard</div>
+                        <div class="text-sm text-gray-600">View all leads & export CSV</div>
+                    </a>
+                    <a href="internal-dashboard.html" class="link-card block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                        <div class="font-semibold">Analytics Dashboard</div>
+                        <div class="text-sm text-gray-600">Charts & metrics (mockup)</div>
+                    </a>
+                    <a href="test-scoring-calculator.html" class="link-card block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                        <div class="font-semibold">Scoring Calculator</div>
+                        <div class="text-sm text-gray-600">Test scoring scenarios</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Testing Tools -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-purple-600 mb-4">🧪 Testing Tools</h2>
+                <div class="space-y-3">
+                    <a href="test-lead-submission.html" class="link-card block p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
+                        <div class="font-semibold">Quick Test Form</div>
+                        <div class="text-sm text-gray-600">Auto-fill test submission</div>
+                    </a>
+                    <a href="test-scoring-calculator.html" class="link-card block p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
+                        <div class="font-semibold">Score Testing</div>
+                        <div class="text-sm text-gray-600">Understand scoring logic</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- API & Backend Info -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">🔌 API Endpoints</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-semibold text-sm text-gray-600 mb-2">Backend Base URL</h3>
+                    <code class="block p-3 bg-gray-100 rounded text-xs break-all">
+                        https://fidenta.netlify.app
+                    </code>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-sm text-gray-600 mb-2">Key Endpoints</h3>
+                    <div class="space-y-1 text-xs">
+                        <div><code class="bg-gray-100 px-2 py-1 rounded">GET /</code> - API Status</div>
+                        <div><code class="bg-gray-100 px-2 py-1 rounded">GET /api/leads</code> - Get all leads</div>
+                        <div><code class="bg-gray-100 px-2 py-1 rounded">POST /api/leads</code> - Create lead</div>
+                        <div><code class="bg-gray-100 px-2 py-1 rounded">GET /api/marketplace/leads</code> - Marketplace leads</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">⚡ Quick Actions</h2>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="checkBackend()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    Check Backend Status
+                </button>
+                <button onclick="window.open('https://vercel.com', '_blank')" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
+                    Open Vercel Dashboard
+                </button>
+                <button onclick="window.open('https://cloud.mongodb.com', '_blank')" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                    Open MongoDB Atlas
+                </button>
+                <button onclick="copyLinks()" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                    Copy All Links
+                </button>
+            </div>
+            <div id="status" class="mt-4"></div>
+        </div>
+
+        <!-- Documentation -->
+        <div class="mt-8 text-center text-sm text-gray-500">
+            <p>Last Updated: January 22, 2025 | Version: 1.0</p>
+            <p class="mt-2">
+                <a href="PROJECT-STATUS-2025-01-22.md" class="text-blue-600 hover:underline">View Documentation</a> | 
+                <a href="CURRENT-STATUS-JAN-22.md" class="text-blue-600 hover:underline">System Status</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function checkBackend() {
+            const statusEl = document.getElementById('status');
+            statusEl.innerHTML = '<p class="text-blue-600">Checking backend...</p>';
+            
+            try {
+                const response = await fetch('https://fidenta.netlify.app');
+                const data = await response.json();
+                statusEl.innerHTML = `
+                    <div class="p-3 bg-green-50 rounded-lg">
+                        <p class="text-green-800">✅ Backend is running!</p>
+                        <p class="text-sm text-green-600">${data.message} - ${new Date(data.timestamp).toLocaleString()}</p>
+                    </div>
+                `;
+            } catch (error) {
+                statusEl.innerHTML = `
+                    <div class="p-3 bg-red-50 rounded-lg">
+                        <p class="text-red-800">❌ Backend connection failed</p>
+                        <p class="text-sm text-red-600">${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function copyLinks() {
+            const links = `
+FIDENTA LEAD GENERATION SYSTEM - ALL LINKS
+
+PUBLIC PAGES:
+- Main Hub: ${window.location.origin}/index-professional.html
+- Lead Form: ${window.location.origin}/templates/business-loan/index-complete.html
+- Marketplace: ${window.location.origin}/marketplace/index.html
+
+ADMIN TOOLS:
+- Lead Dashboard: ${window.location.origin}/admin-dashboard.html
+- Analytics: ${window.location.origin}/internal-dashboard.html
+- Scoring Calculator: ${window.location.origin}/test-scoring-calculator.html
+
+TESTING:
+- Quick Test: ${window.location.origin}/test-lead-submission.html
+
+BACKEND API:
+- Base URL: https://fidenta.netlify.app
+- Leads Endpoint: https://fidenta.netlify.app/api/leads
+            `.trim();
+            
+            navigator.clipboard.writeText(links).then(() => {
+                const statusEl = document.getElementById('status');
+                statusEl.innerHTML = `
+                    <div class="p-3 bg-blue-50 rounded-lg">
+                        <p class="text-blue-800">✅ All links copied to clipboard!</p>
+                    </div>
+                `;
+                setTimeout(() => {
+                    statusEl.innerHTML = '';
+                }, 3000);
+            });
+        }
+
+        // Check backend on load
+        checkBackend();
+    </script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pre-Qualification Results | Fidenta</title>
+    <meta name="description" content="Your business funding pre-qualification results are ready. Connect with a funding specialist today.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Animations */
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Progress ring */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+        
+        /* Confetti animation */
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s linear;
+        }
+        
+        /* Logo styling */
+        .logo-text {
+            background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+        }
+        
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 2px;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gradient-to-br from-blue-50 via-white to-purple-50 min-h-screen">
+    
+    <!-- Confetti container -->
+    <div id="confettiContainer"></div>
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex items-center">
+                        <svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" fill="none">
+                            <rect x="2" y="2" width="36" height="36" rx="8" fill="url(#logo-gradient)" opacity="0.1"/>
+                            <path d="M20 10L25 15L20 20L15 15L20 10Z" fill="url(#logo-gradient)"/>
+                            <path d="M20 20L25 25L20 30L15 25L20 20Z" fill="url(#logo-gradient)" opacity="0.6"/>
+                            <defs>
+                                <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#2563EB"/>
+                                    <stop offset="100%" stop-color="#7C3AED"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="logo-text text-3xl">Fidenta</span>
+                        <span class="logo-dot"></span>
+                    </div>
+                </div>
+                
+                <!-- Phone -->
+                <div class="flex items-center text-sm">
+                    <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    <span class="text-gray-600">Need help?</span>
+                    <a href="tel:1-888-343-3682" class="ml-1 text-blue-600 font-semibold">1-888-FIDENTA</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 max-w-6xl">
+        
+        <!-- Success Message -->
+        <div class="text-center mb-12 slide-up">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
+                <svg class="w-10 h-10 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Congratulations, <span id="businessName" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Your Business</span>!
+            </h1>
+            
+            <p class="text-xl text-gray-600 mb-2">
+                Great news! You're pre-qualified for business funding.
+            </p>
+            
+            <p class="text-lg text-gray-500">
+                A funding specialist will contact you within the next <strong>60 minutes</strong> to discuss your options.
+            </p>
+        </div>
+        
+        <!-- Pre-Qualification Status Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8 slide-up" style="animation-delay: 0.2s;">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Your Pre-Qualification Status</h2>
+                        <p class="opacity-90">Based on the information you provided</p>
+                    </div>
+                    <div class="bg-white/20 backdrop-blur rounded-full p-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100 4h2a1 1 0 100 2 2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-8">
+                <!-- Approval Message (Dynamic based on scoring) -->
+                <div id="approvalMessage" class="mb-8">
+                    <!-- This will be populated dynamically -->
+                </div>
+                
+                <!-- Available Products (Only show general categories, not scores) -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Funding Options Available to You:</h3>
+                    <div id="availableProducts" class="grid md:grid-cols-2 gap-4">
+                        <!-- Products will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Funding Range -->
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Estimated Funding Range</p>
+                            <p class="text-3xl font-bold text-gray-900" id="fundingRange">$10,000 - $500,000</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-gray-600 mb-1">Approval Speed</p>
+                            <p class="text-xl font-semibold text-green-600">As fast as 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Next Steps -->
+                <div class="border-t pt-8">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">What Happens Next?</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <span class="text-blue-600 font-bold text-sm">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Specialist Review</h4>
+                                <p class="text-gray-600">Our funding specialist is reviewing your application and matching you with the best lenders.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <span class="text-blue-600 font-bold text-sm">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Personal Consultation</h4>
+                                <p class="text-gray-600">You'll receive a call within 60 minutes to discuss your specific needs and options.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 rounded-full p-2 mr-4 mt-1">
+                                <span class="text-blue-600 font-bold text-sm">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Receive Offers</h4>
+                                <p class="text-gray-600">Compare multiple offers and choose the best terms for your business.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-green-100 rounded-full p-2 mr-4 mt-1">
+                                <span class="text-green-600 font-bold text-sm">4</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Get Funded</h4>
+                                <p class="text-gray-600">Once approved, receive funds in as little as 24 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Actions -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8 slide-up" style="animation-delay: 0.4s;">
+            <!-- Upload Documents -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-start mb-4">
+                    <div class="bg-yellow-100 rounded-lg p-3 mr-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900 mb-2">Speed Up Your Approval</h3>
+                        <p class="text-sm text-gray-600 mb-4">Upload documents now to expedite your funding and potentially qualify for better rates.</p>
+                        <button onclick="showDocumentUpload()" class="text-blue-600 font-medium text-sm hover:text-blue-700">
+                            Upload Documents →
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Schedule Call -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-start mb-4">
+                    <div class="bg-green-100 rounded-lg p-3 mr-4">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900 mb-2">Prefer a Specific Time?</h3>
+                        <p class="text-sm text-gray-600 mb-4">Schedule a call with our funding specialist at your convenience.</p>
+                        <button onclick="showScheduler()" class="text-blue-600 font-medium text-sm hover:text-blue-700">
+                            Schedule Call →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Trust Elements -->
+        <div class="text-center py-8 border-t slide-up" style="animation-delay: 0.6s;">
+            <p class="text-sm text-gray-500 mb-4">Your information is secure and protected</p>
+            <div class="flex items-center justify-center gap-6 opacity-60">
+                <img src="https://via.placeholder.com/80x30/E5E7EB/9CA3AF?text=BBB+A%2B" alt="BBB" class="h-8">
+                <img src="https://via.placeholder.com/100x30/E5E7EB/9CA3AF?text=TrustPilot" alt="TrustPilot" class="h-8">
+                <img src="https://via.placeholder.com/80x30/E5E7EB/9CA3AF?text=Norton" alt="Norton" class="h-8">
+                <img src="https://via.placeholder.com/80x30/E5E7EB/9CA3AF?text=SSL" alt="SSL" class="h-8">
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- Document Upload Modal (Hidden by default) -->
+    <div id="documentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-8 max-w-lg w-full mx-4">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Upload Documents</h3>
+            <p class="text-gray-600 mb-6">Uploading documents can increase your approval chances and funding amount.</p>
+            
+            <div class="space-y-4 mb-6">
+                <label class="block">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 cursor-pointer">
+                        <svg class="w-10 h-10 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-sm text-gray-600">Bank Statements (Last 3 months)</p>
+                        <input type="file" class="hidden" accept=".pdf,.jpg,.png" multiple>
+                    </div>
+                </label>
+                
+                <label class="block">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 cursor-pointer">
+                        <svg class="w-10 h-10 text-gray-400 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        <p class="text-sm text-gray-600">Tax Returns (Optional)</p>
+                        <input type="file" class="hidden" accept=".pdf,.jpg,.png" multiple>
+                    </div>
+                </label>
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="closeDocumentModal()" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50">
+                    Skip for Now
+                </button>
+                <button onclick="uploadDocuments()" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700">
+                    Upload Documents
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get evaluation results from session storage
+        const evaluation = JSON.parse(sessionStorage.getItem('evaluationResults') || '{}');
+        const categorization = JSON.parse(sessionStorage.getItem('categorization') || '{}');
+        const recommendations = JSON.parse(sessionStorage.getItem('recommendations') || '{}');
+        
+        // Populate business name
+        const businessName = sessionStorage.getItem('businessName') || 'Your Business';
+        document.getElementById('businessName').textContent = businessName;
+        
+        // Generate approval message based on grade (but keep it friendly)
+        function generateApprovalMessage() {
+            const grade = evaluation.leadGrade?.grade || 'C';
+            const messageContainer = document.getElementById('approvalMessage');
+            
+            let message = '';
+            let icon = '';
+            let iconColor = '';
+            
+            if (grade === 'A+' || grade === 'A') {
+                message = `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-green-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-green-900 mb-2">Excellent Pre-Qualification!</h4>
+                                <p class="text-green-800">Based on your business profile, you're likely to qualify for our best rates and terms. Multiple lenders are interested in funding businesses like yours.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (grade === 'B+' || grade === 'B') {
+                message = `
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-blue-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-blue-900 mb-2">Strong Pre-Qualification!</h4>
+                                <p class="text-blue-800">Your business shows strong potential for funding approval. We have several competitive options available for you.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (grade === 'C+' || grade === 'C') {
+                message = `
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-purple-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-purple-900 mb-2">You're Pre-Qualified!</h4>
+                                <p class="text-purple-800">Good news! We have funding options available for your business. Our specialist will help you find the best fit for your needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                message = `
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-yellow-600 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-yellow-900 mb-2">Alternative Funding Available!</h4>
+                                <p class="text-yellow-800">We have specialized funding programs designed for businesses in your situation. Our specialist will discuss all available options with you.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            messageContainer.innerHTML = message;
+        }
+        
+        // Display available products (without scores)
+        function displayProducts() {
+            const productsContainer = document.getElementById('availableProducts');
+            const qualifiedProducts = evaluation.qualifiedProducts || [];
+            
+            const productDescriptions = {
+                'termLoan': {
+                    name: 'Term Loan',
+                    description: 'Fixed amount with predictable monthly payments',
+                    icon: '📊'
+                },
+                'mca': {
+                    name: 'Merchant Cash Advance',
+                    description: 'Quick funding based on your sales',
+                    icon: '💳'
+                },
+                'sbaLoan': {
+                    name: 'SBA Loan',
+                    description: 'Government-backed loan with competitive rates',
+                    icon: '🏛️'
+                },
+                'lineOfCredit': {
+                    name: 'Line of Credit',
+                    description: 'Flexible access to funds when you need them',
+                    icon: '💰'
+                },
+                'equipmentFinancing': {
+                    name: 'Equipment Financing',
+                    description: 'Finance equipment purchases directly',
+                    icon: '🚚'
+                },
+                'invoiceFactoring': {
+                    name: 'Invoice Factoring',
+                    description: 'Get cash for your outstanding invoices',
+                    icon: '📄'
+                }
+            };
+            
+            let productsHTML = '';
+            
+            // Show qualified products
+            qualifiedProducts.forEach(product => {
+                const info = productDescriptions[product.productKey] || productDescriptions[product.productName?.toLowerCase().replace(/\s+/g, '')] || {
+                    name: product.productName,
+                    description: 'Funding option available',
+                    icon: '✓'
+                };
+                
+                productsHTML += `
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition">
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-3">${info.icon}</span>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${info.name}</h4>
+                                <p class="text-sm text-gray-600">${info.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // If no products qualified, show alternative options
+            if (qualifiedProducts.length === 0) {
+                productsHTML = `
+                    <div class="col-span-2 bg-gray-50 rounded-lg p-6 text-center">
+                        <p class="text-gray-600">Our funding specialist will review alternative options specifically tailored to your business needs.</p>
+                    </div>
+                `;
+            }
+            
+            productsContainer.innerHTML = productsHTML;
+        }
+        
+        // Display funding range
+        function displayFundingRange() {
+            const fundingAmount = sessionStorage.getItem('fundingAmount') || '50000';
+            const amount = parseInt(fundingAmount.replace(/\D/g, ''));
+            
+            let minAmount = Math.max(10000, amount * 0.5);
+            let maxAmount = Math.min(5000000, amount * 3);
+            
+            // Adjust based on grade
+            const grade = evaluation.leadGrade?.grade || 'C';
+            if (grade === 'A+' || grade === 'A') {
+                maxAmount = Math.min(5000000, amount * 5);
+            } else if (grade === 'B+' || grade === 'B') {
+                maxAmount = Math.min(5000000, amount * 3);
+            } else if (grade === 'C+' || grade === 'C') {
+                maxAmount = Math.min(5000000, amount * 2);
+            } else {
+                maxAmount = Math.min(5000000, amount * 1.5);
+            }
+            
+            document.getElementById('fundingRange').textContent = 
+                `$${minAmount.toLocaleString()} - $${maxAmount.toLocaleString()}`;
+        }
+        
+        // Confetti animation for excellent scores
+        function showConfetti() {
+            const grade = evaluation.leadGrade?.grade || 'C';
+            if (grade === 'A+' || grade === 'A') {
+                const container = document.getElementById('confettiContainer');
+                const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+                
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * 100 + '%';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                        container.appendChild(confetti);
+                        
+                        setTimeout(() => confetti.remove(), 3000);
+                    }, i * 30);
+                }
+            }
+        }
+        
+        // Modal functions
+        function showDocumentUpload() {
+            document.getElementById('documentModal').classList.remove('hidden');
+        }
+        
+        function closeDocumentModal() {
+            document.getElementById('documentModal').classList.add('hidden');
+        }
+        
+        function uploadDocuments() {
+            // Handle document upload
+            alert('Document upload feature will be connected to your backend API');
+            closeDocumentModal();
+        }
+        
+        function showScheduler() {
+            // Open scheduling widget
+            alert('Calendar scheduling will be integrated with your preferred scheduling tool');
+        }
+        
+        // Initialize page
+        generateApprovalMessage();
+        displayProducts();
+        displayFundingRange();
+        showConfetti();
+        
+        // Auto-refresh warning after 5 minutes
+        setTimeout(() => {
+            if (confirm('Your pre-qualification expires in 10 minutes. Would you like to speak with a specialist now?')) {
+                window.location.href = 'tel:1-888-343-3682';
+            }
+        }, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

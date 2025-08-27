@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Pre-Qualification Results | Fidenta</title>
+    <meta name="description" content="View your personalized business funding options and pre-qualification results.">
+    
+    <!-- Performance: Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB', // Professional blue
+                        secondary: '#10B981', // Success green
+                        accent: '#8B5CF6', // Premium purple
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#1F2937',
+                        light: '#F9FAFB'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Poppins', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .score-ring {
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: 339.292;
+            animation: fillRing 2s ease-out forwards;
+        }
+        
+        @keyframes fillRing {
+            to {
+                stroke-dashoffset: var(--offset);
+            }
+        }
+        
+        .loan-card {
+            transition: all 0.3s ease;
+        }
+        
+        .loan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .grade-badge {
+            background: linear-gradient(135deg, var(--grade-color-1) 0%, var(--grade-color-2) 100%);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="font-display text-2xl font-bold text-primary">Fidenta</div>
+                    <span class="text-xs text-gray-500 font-medium">.loan</span>
+                </div>
+                
+                <!-- Contact -->
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600">Questions?</span>
+                    <a href="tel:1-888-FIDENTA" class="text-primary font-semibold">1-888-FIDENTA</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-8 md:py-12">
+        <div class="container mx-auto px-4 max-w-7xl">
+            
+            <!-- Success Message -->
+            <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-8 animate-slide-up">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <div>
+                        <h2 class="text-green-800 font-semibold">Congratulations! You're Pre-Qualified</h2>
+                        <p class="text-green-700 text-sm mt-1">Based on your information, you qualify for multiple funding options.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left Column: Score & Grade -->
+                <div class="lg:col-span-1">
+                    
+                    <!-- Lead Score Card -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 mb-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Your Funding Score</h3>
+                        
+                        <!-- Score Circle -->
+                        <div class="relative w-48 h-48 mx-auto mb-4">
+                            <svg class="w-48 h-48 transform -rotate-90">
+                                <circle cx="96" cy="96" r="84" stroke="#E5E7EB" stroke-width="12" fill="none"/>
+                                <circle cx="96" cy="96" r="84" stroke="url(#scoreGradient)" stroke-width="12" fill="none"
+                                        class="score-ring" style="--offset: 85;"/>
+                                <defs>
+                                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#10B981"/>
+                                        <stop offset="100%" stop-color="#3B82F6"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-5xl font-bold text-gray-800" id="scoreNumber">85</span>
+                                <span class="text-sm text-gray-500">out of 100</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Grade Badge -->
+                        <div class="text-center">
+                            <div class="inline-flex items-center px-4 py-2 rounded-full grade-badge text-white"
+                                 style="--grade-color-1: #10B981; --grade-color-2: #3B82F6;">
+                                <span class="text-2xl font-bold mr-2">A</span>
+                                <span class="text-sm">Premium Lead</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-2">Excellent qualification status</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Total Funding Available -->
+                    <div class="bg-gradient-to-br from-primary to-accent text-white rounded-xl p-6 card-shadow">
+                        <h4 class="text-sm uppercase tracking-wide opacity-90 mb-2">Total Available Funding</h4>
+                        <div class="text-3xl font-bold mb-1">$50,000 - $2,500,000</div>
+                        <p class="text-sm opacity-90">Across all qualified products</p>
+                    </div>
+                    
+                </div>
+                
+                <!-- Right Column: Qualified Products -->
+                <div class="lg:col-span-2">
+                    
+                    <!-- Qualified Products Header -->
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Your Qualified Funding Options</h2>
+                        <p class="text-gray-600">You qualify for <span class="font-semibold text-primary">5 funding products</span>. Here are your best matches:</p>
+                    </div>
+                    
+                    <!-- Product Cards -->
+                    <div class="space-y-4" id="qualifiedProducts">
+                        
+                        <!-- Product Card 1: Term Loan -->
+                        <div class="bg-white rounded-lg shadow-md p-6 loan-card border-l-4 border-secondary">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Term Loan</h3>
+                                    <p class="text-sm text-gray-600">Traditional business loan with fixed payments</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
+                                    Best Match
+                                </span>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Amount</p>
+                                    <p class="font-semibold text-gray-800">$25K - $1.5M</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Rate</p>
+                                    <p class="font-semibold text-gray-800">7.5% - 12% APR</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Term</p>
+                                    <p class="font-semibold text-gray-800">12-60 months</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Speed</p>
+                                    <p class="font-semibold text-green-600">5-7 days</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <div class="flex items-center text-sm">
+                                    <svg class="w-4 h-4 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-600">Approval Probability: <strong>High (85%)</strong></span>
+                                </div>
+                                <button class="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Product Card 2: Line of Credit -->
+                        <div class="bg-white rounded-lg shadow-md p-6 loan-card border-l-4 border-primary">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Business Line of Credit</h3>
+                                    <p class="text-sm text-gray-600">Flexible access to funds when needed</p>
+                                </div>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+                                    Recommended
+                                </span>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Amount</p>
+                                    <p class="font-semibold text-gray-800">$10K - $250K</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Rate</p>
+                                    <p class="font-semibold text-gray-800">9% - 15% APR</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Draw Period</p>
+                                    <p class="font-semibold text-gray-800">12 months</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Speed</p>
+                                    <p class="font-semibold text-green-600">3-5 days</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <div class="flex items-center text-sm">
+                                    <svg class="w-4 h-4 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-600">Approval Probability: <strong>High (80%)</strong></span>
+                                </div>
+                                <button class="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                                    Apply Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Product Card 3: MCA -->
+                        <div class="bg-white rounded-lg shadow-md p-6 loan-card border-l-4 border-warning">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Merchant Cash Advance</h3>
+                                    <p class="text-sm text-gray-600">Quick funding based on future sales</p>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full">
+                                    Fast Funding
+                                </span>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Amount</p>
+                                    <p class="font-semibold text-gray-800">$5K - $500K</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Factor</p>
+                                    <p class="font-semibold text-gray-800">1.15 - 1.35</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Term</p>
+                                    <p class="font-semibold text-gray-800">3-18 months</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase">Speed</p>
+                                    <p class="font-semibold text-orange-600">24-48 hours</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                                <div class="flex items-center text-sm">
+                                    <svg class="w-4 h-4 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-gray-600">Approval Probability: <strong>Very High (95%)</strong></span>
+                                </div>
+                                <button class="bg-warning text-white px-4 py-2 rounded-lg font-medium hover:bg-yellow-600 transition">
+                                    Get Funded Fast
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Additional Options -->
+                    <div class="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                        <h4 class="font-semibold text-blue-900 mb-2">Want to Explore More Options?</h4>
+                        <p class="text-blue-800 text-sm mb-4">You also qualify for SBA Loans, Equipment Financing, and Revenue-Based Financing.</p>
+                        <button class="text-blue-600 font-semibold text-sm hover:text-blue-700">
+                            View All 5 Qualified Products →
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Bottom Section: Next Steps -->
+            <div class="mt-12 bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Your Next Steps</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Step 1 -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                            1
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800 mb-1">Review Your Options</h4>
+                            <p class="text-sm text-gray-600">Compare rates, terms, and funding speeds to choose the best fit for your needs.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                            2
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800 mb-1">Speak with a Specialist</h4>
+                            <p class="text-sm text-gray-600">Our funding advisors will call you within 1 hour to discuss your options.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+                            3
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800 mb-1">Get Your Funds</h4>
+                            <p class="text-sm text-gray-600">Complete the application and receive funding in as fast as 24 hours.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- CTA Section -->
+                <div class="mt-8 p-6 bg-gradient-to-r from-primary to-accent rounded-lg text-white text-center">
+                    <h4 class="text-xl font-bold mb-2">Ready to Get Started?</h4>
+                    <p class="mb-4 opacity-90">A funding specialist will contact you within the next hour.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                            Schedule a Call
+                        </button>
+                        <button class="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition">
+                            Download Results PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="font-display text-xl font-bold text-white mb-1">Fidenta</div>
+                    <p class="text-sm">Alternative Business Funding Solutions</p>
+                </div>
+                <div class="flex space-x-6 text-sm">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Service</a>
+                    <a href="#" class="hover:text-white">Contact Us</a>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-800 text-center text-xs">
+                <p>&copy; 2024 Fidenta.loan. All rights reserved. | Lead ID: <span id="leadId">FID-1234567890-ABC</span></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript for Dynamic Content -->
+    <script src="underwriting-engine.js"></script>
+    <script>
+        // This will be populated with actual evaluation results
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get evaluation results from URL parameters or session storage
+            const urlParams = new URLSearchParams(window.location.search);
+            const evaluationData = sessionStorage.getItem('evaluationResults');
+            
+            if (evaluationData) {
+                const results = JSON.parse(evaluationData);
+                displayResults(results);
+            }
+        });
+        
+        function displayResults(results) {
+            // Update score
+            document.getElementById('scoreNumber').textContent = results.overallScore;
+            
+            // Update lead ID
+            document.getElementById('leadId').textContent = results.leadId;
+            
+            // Animate score ring
+            const scoreRing = document.querySelector('.score-ring');
+            const circumference = 2 * Math.PI * 84;
+            const offset = circumference - (results.overallScore / 100) * circumference;
+            scoreRing.style.setProperty('--offset', offset);
+            
+            // Update qualified products dynamically
+            updateQualifiedProducts(results.qualifiedProducts);
+        }
+        
+        function updateQualifiedProducts(products) {
+            const container = document.getElementById('qualifiedProducts');
+            // Clear existing products
+            container.innerHTML = '';
+            
+            // Add qualified products
+            products.forEach((product, index) => {
+                const card = createProductCard(product, index === 0);
+                container.appendChild(card);
+            });
+        }
+        
+        function createProductCard(product, isBestMatch) {
+            // Create product card HTML dynamically based on evaluation
+            // This is a simplified version - you'd expand this with actual data
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg shadow-md p-6 loan-card border-l-4';
+            card.classList.add(isBestMatch ? 'border-secondary' : 'border-primary');
+            
+            // Add product details...
+            // (Implementation details omitted for brevity)
+            
+            return card;
+        }
+    </script>
+    
+</body>
+</html>

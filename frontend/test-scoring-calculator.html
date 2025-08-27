@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Scoring Calculator - Fidenta</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        .score-meter {
+            background: conic-gradient(
+                from 0deg,
+                #ef4444 0deg 72deg,
+                #f59e0b 72deg 144deg,
+                #eab308 144deg 216deg,
+                #84cc16 216deg 288deg,
+                #22c55e 288deg 360deg
+            );
+        }
+        
+        .grade-a-plus { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
+        .grade-a { background: #22c55e; color: white; }
+        .grade-b-plus { background: #84cc16; color: white; }
+        .grade-b { background: #eab308; color: white; }
+        .grade-c-plus { background: #f59e0b; color: white; }
+        .grade-c { background: #f97316; color: white; }
+        .grade-d { background: #ef4444; color: white; }
+        
+        .tier-platinum { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .tier-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .tier-silver { background: linear-gradient(135deg, #6b7280, #4b5563); }
+        .tier-bronze { background: linear-gradient(135deg, #92400e, #78350f); }
+        .tier-standard { background: #3b82f6; }
+        .tier-basic { background: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Lead Scoring Calculator</h1>
+                    <p class="text-sm text-gray-600">Test and understand the Fidenta scoring algorithm</p>
+                </div>
+                <a href="index-professional.html" class="text-blue-600 hover:text-blue-700">← Back to Dashboard</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="grid lg:grid-cols-2 gap-8">
+            
+            <!-- Input Panel -->
+            <div class="space-y-6">
+                
+                <!-- Quick Scenarios -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold mb-4">Quick Test Scenarios</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="loadScenario('premium')" class="bg-gradient-to-r from-green-500 to-emerald-500 text-white p-3 rounded-lg hover:opacity-90 transition">
+                            <div class="font-semibold">Premium Lead</div>
+                            <div class="text-xs opacity-90">A+ Grade (90+)</div>
+                        </button>
+                        <button onclick="loadScenario('good')" class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-3 rounded-lg hover:opacity-90 transition">
+                            <div class="font-semibold">Good Lead</div>
+                            <div class="text-xs opacity-90">B+ Grade (70-80)</div>
+                        </button>
+                        <button onclick="loadScenario('average')" class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-3 rounded-lg hover:opacity-90 transition">
+                            <div class="font-semibold">Average Lead</div>
+                            <div class="text-xs opacity-90">C Grade (50-60)</div>
+                        </button>
+                        <button onclick="loadScenario('poor')" class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-3 rounded-lg hover:opacity-90 transition">
+                            <div class="font-semibold">Poor Lead</div>
+                            <div class="text-xs opacity-90">D Grade (<40)</div>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Input Form -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold mb-4">Lead Parameters</h2>
+                    <form id="scoringForm" class="space-y-4">
+                        
+                        <!-- Credit Score -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Credit Score
+                                <span class="text-xs text-gray-500 ml-2">(0-30 points)</span>
+                            </label>
+                            <input type="number" id="creditScore" min="300" max="850" value="700" 
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                oninput="calculateScore()">
+                            <div class="text-xs text-gray-500 mt-1">
+                                750+ = 30pts | 700+ = 25pts | 650+ = 20pts | 600+ = 10pts | 550+ = 5pts
+                            </div>
+                        </div>
+                        
+                        <!-- Annual Revenue -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Annual Revenue
+                                <span class="text-xs text-gray-500 ml-2">(0-20 points)</span>
+                            </label>
+                            <input type="number" id="annualRevenue" min="0" value="500000" 
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                oninput="calculateScore()">
+                            <div class="text-xs text-gray-500 mt-1">
+                                $1M+ = 20pts | $500K+ = 15pts | $250K+ = 10pts | $100K+ = 5pts
+                            </div>
+                        </div>
+                        
+                        <!-- Months in Business -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Months in Business
+                                <span class="text-xs text-gray-500 ml-2">(0-15 points)</span>
+                            </label>
+                            <input type="number" id="monthsInBusiness" min="0" value="36" 
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                oninput="calculateScore()">
+                            <div class="text-xs text-gray-500 mt-1">
+                                60+ = 15pts | 36+ = 10pts | 24+ = 7pts | 12+ = 3pts
+                            </div>
+                        </div>
+                        
+                        <!-- Documents -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Documents Provided
+                                <span class="text-xs text-gray-500 ml-2">(0-15 points)</span>
+                            </label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="bankStatements" class="mr-2" onchange="calculateScore()">
+                                    <span class="text-sm">Bank Statements (8 points)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="taxReturns" class="mr-2" onchange="calculateScore()">
+                                    <span class="text-sm">Tax Returns (7 points)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Urgency -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Funding Urgency
+                                <span class="text-xs text-gray-500 ml-2">(0-5 points)</span>
+                            </label>
+                            <select id="urgency" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                onchange="calculateScore()">
+                                <option value="immediate">Immediate (5 points)</option>
+                                <option value="week">This Week (3 points)</option>
+                                <option value="month">This Month (0 points)</option>
+                                <option value="planning">Just Planning (0 points)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Loan Amount (for value calculation) -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Loan Amount Requested
+                                <span class="text-xs text-gray-500 ml-2">(affects lead value, not score)</span>
+                            </label>
+                            <input type="number" id="loanAmount" min="0" value="100000" 
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                                oninput="calculateScore()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Results Panel -->
+            <div class="space-y-6">
+                
+                <!-- Score Display -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold mb-4">Lead Score Results</h2>
+                    
+                    <!-- Big Score Display -->
+                    <div class="text-center mb-6">
+                        <div class="relative inline-block">
+                            <div class="w-32 h-32 rounded-full score-meter opacity-20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div>
+                                    <div class="text-4xl font-bold" id="scoreDisplay">75</div>
+                                    <div class="text-sm text-gray-600">out of 100</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Grade and Tier -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="text-center">
+                            <div class="text-sm text-gray-600 mb-1">Grade</div>
+                            <div id="gradeDisplay" class="inline-block px-4 py-2 rounded-full font-bold grade-b-plus">B+</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-600 mb-1">Tier</div>
+                            <div id="tierDisplay" class="inline-block px-4 py-2 rounded-full font-bold text-white tier-silver">SILVER</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Estimated Value -->
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="text-sm text-gray-600 mb-1">Estimated Lead Value</div>
+                        <div class="text-2xl font-bold text-green-600" id="valueDisplay">$150 - $250</div>
+                        <div class="text-xs text-gray-500 mt-1">Based on grade and loan amount</div>
+                    </div>
+                </div>
+                
+                <!-- Score Breakdown -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-lg font-semibold mb-4">Score Breakdown</h2>
+                    <div class="space-y-3" id="breakdown">
+                        <!-- Breakdown will be inserted here -->
+                    </div>
+                    
+                    <!-- Base Score Note -->
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="text-sm text-gray-600">
+                            <strong>Base Score:</strong> 50 points (all leads start here)
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Algorithm Explanation -->
+                <div class="bg-blue-50 rounded-lg p-4">
+                    <h3 class="font-semibold text-blue-900 mb-2">How Scoring Works</h3>
+                    <ul class="text-sm text-blue-800 space-y-1">
+                        <li>• Base score: 50 points</li>
+                        <li>• Credit score: Up to 30 points</li>
+                        <li>• Annual revenue: Up to 20 points</li>
+                        <li>• Time in business: Up to 15 points</li>
+                        <li>• Documents: Up to 15 points</li>
+                        <li>• Urgency: Up to 5 points</li>
+                        <li>• Maximum possible: 135 (capped at 100)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Exact scoring logic from backend
+        function calculateLeadScore(lead) {
+            let score = 50; // Base score
+            let breakdown = [];
+            
+            breakdown.push({ label: 'Base Score', points: 50, max: 50 });
+            
+            // Credit score impact (0-30 points)
+            let creditPoints = 0;
+            if (lead.creditScore >= 750) creditPoints = 30;
+            else if (lead.creditScore >= 700) creditPoints = 25;
+            else if (lead.creditScore >= 650) creditPoints = 20;
+            else if (lead.creditScore >= 600) creditPoints = 10;
+            else if (lead.creditScore >= 550) creditPoints = 5;
+            score += creditPoints;
+            breakdown.push({ label: `Credit Score (${lead.creditScore})`, points: creditPoints, max: 30 });
+            
+            // Annual revenue impact (0-20 points)
+            let revenuePoints = 0;
+            if (lead.annualRevenue >= 1000000) revenuePoints = 20;
+            else if (lead.annualRevenue >= 500000) revenuePoints = 15;
+            else if (lead.annualRevenue >= 250000) revenuePoints = 10;
+            else if (lead.annualRevenue >= 100000) revenuePoints = 5;
+            score += revenuePoints;
+            breakdown.push({ label: `Annual Revenue ($${lead.annualRevenue.toLocaleString()})`, points: revenuePoints, max: 20 });
+            
+            // Time in business (0-15 points)
+            let timePoints = 0;
+            if (lead.monthsInBusiness >= 60) timePoints = 15;
+            else if (lead.monthsInBusiness >= 36) timePoints = 10;
+            else if (lead.monthsInBusiness >= 24) timePoints = 7;
+            else if (lead.monthsInBusiness >= 12) timePoints = 3;
+            score += timePoints;
+            breakdown.push({ label: `Time in Business (${lead.monthsInBusiness} months)`, points: timePoints, max: 15 });
+            
+            // Documents uploaded (0-15 points)
+            let docPoints = 0;
+            if (lead.bankStatementsUploaded) docPoints += 8;
+            if (lead.taxReturnsUploaded) docPoints += 7;
+            score += docPoints;
+            breakdown.push({ label: 'Documents Provided', points: docPoints, max: 15 });
+            
+            // Urgency (affects value, not quality)
+            let urgencyPoints = 0;
+            if (lead.urgency === 'immediate') urgencyPoints = 5;
+            else if (lead.urgency === 'week') urgencyPoints = 3;
+            score += urgencyPoints;
+            breakdown.push({ label: `Urgency (${lead.urgency})`, points: urgencyPoints, max: 5 });
+            
+            return {
+                score: Math.min(100, Math.max(0, score)),
+                breakdown: breakdown
+            };
+        }
+        
+        function getLeadGrade(score) {
+            if (score >= 90) return 'A+';
+            if (score >= 80) return 'A';
+            if (score >= 70) return 'B+';
+            if (score >= 60) return 'B';
+            if (score >= 50) return 'C+';
+            if (score >= 40) return 'C';
+            return 'D';
+        }
+        
+        function getScoringTier(score) {
+            if (score >= 90) return 'PLATINUM';
+            if (score >= 80) return 'GOLD';
+            if (score >= 70) return 'SILVER';
+            if (score >= 60) return 'BRONZE';
+            if (score >= 40) return 'STANDARD';
+            return 'BASIC';
+        }
+        
+        function getLeadValue(grade, loanAmount) {
+            const values = {
+                'A+': { min: 300, max: 375 },
+                'A': { min: 200, max: 275 },
+                'B+': { min: 100, max: 175 },
+                'B': { min: 50, max: 125 },
+                'C+': { min: 30, max: 75 },
+                'C': { min: 20, max: 50 },
+                'D': { min: 10, max: 25 }
+            };
+            
+            const range = values[grade] || values['D'];
+            
+            // Adjust based on loan amount
+            let multiplier = 1;
+            if (loanAmount >= 500000) multiplier = 1.5;
+            else if (loanAmount >= 250000) multiplier = 1.25;
+            else if (loanAmount >= 100000) multiplier = 1.1;
+            else if (loanAmount < 25000) multiplier = 0.75;
+            
+            return {
+                min: Math.round(range.min * multiplier),
+                max: Math.round(range.max * multiplier)
+            };
+        }
+        
+        function calculateScore() {
+            const lead = {
+                creditScore: parseInt(document.getElementById('creditScore').value) || 0,
+                annualRevenue: parseInt(document.getElementById('annualRevenue').value) || 0,
+                monthsInBusiness: parseInt(document.getElementById('monthsInBusiness').value) || 0,
+                bankStatementsUploaded: document.getElementById('bankStatements').checked,
+                taxReturnsUploaded: document.getElementById('taxReturns').checked,
+                urgency: document.getElementById('urgency').value,
+                loanAmount: parseInt(document.getElementById('loanAmount').value) || 0
+            };
+            
+            const result = calculateLeadScore(lead);
+            const grade = getLeadGrade(result.score);
+            const tier = getScoringTier(result.score);
+            const value = getLeadValue(grade, lead.loanAmount);
+            
+            // Update display
+            document.getElementById('scoreDisplay').textContent = result.score;
+            
+            // Update grade
+            const gradeEl = document.getElementById('gradeDisplay');
+            gradeEl.textContent = grade;
+            gradeEl.className = 'inline-block px-4 py-2 rounded-full font-bold grade-' + 
+                grade.toLowerCase().replace('+', '-plus');
+            
+            // Update tier
+            const tierEl = document.getElementById('tierDisplay');
+            tierEl.textContent = tier;
+            tierEl.className = 'inline-block px-4 py-2 rounded-full font-bold text-white tier-' + 
+                tier.toLowerCase();
+            
+            // Update value
+            document.getElementById('valueDisplay').textContent = 
+                `$${value.min} - $${value.max}`;
+            
+            // Update breakdown
+            const breakdownEl = document.getElementById('breakdown');
+            breakdownEl.innerHTML = result.breakdown.map(item => `
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600">${item.label}</span>
+                    <div class="flex items-center gap-2">
+                        <div class="w-24 bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-500 h-2 rounded-full" style="width: ${(item.points / item.max * 100)}%"></div>
+                        </div>
+                        <span class="text-sm font-semibold w-16 text-right">${item.points}/${item.max}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadScenario(type) {
+            const scenarios = {
+                premium: {
+                    creditScore: 780,
+                    annualRevenue: 1500000,
+                    monthsInBusiness: 72,
+                    bankStatements: true,
+                    taxReturns: true,
+                    urgency: 'immediate',
+                    loanAmount: 500000
+                },
+                good: {
+                    creditScore: 720,
+                    annualRevenue: 600000,
+                    monthsInBusiness: 36,
+                    bankStatements: true,
+                    taxReturns: false,
+                    urgency: 'week',
+                    loanAmount: 150000
+                },
+                average: {
+                    creditScore: 650,
+                    annualRevenue: 200000,
+                    monthsInBusiness: 18,
+                    bankStatements: true,
+                    taxReturns: false,
+                    urgency: 'month',
+                    loanAmount: 50000
+                },
+                poor: {
+                    creditScore: 520,
+                    annualRevenue: 75000,
+                    monthsInBusiness: 8,
+                    bankStatements: false,
+                    taxReturns: false,
+                    urgency: 'planning',
+                    loanAmount: 25000
+                }
+            };
+            
+            const scenario = scenarios[type];
+            document.getElementById('creditScore').value = scenario.creditScore;
+            document.getElementById('annualRevenue').value = scenario.annualRevenue;
+            document.getElementById('monthsInBusiness').value = scenario.monthsInBusiness;
+            document.getElementById('bankStatements').checked = scenario.bankStatements;
+            document.getElementById('taxReturns').checked = scenario.taxReturns;
+            document.getElementById('urgency').value = scenario.urgency;
+            document.getElementById('loanAmount').value = scenario.loanAmount;
+            
+            calculateScore();
+        }
+        
+        // Calculate initial score
+        calculateScore();
+    </script>
+</body>
+</html>

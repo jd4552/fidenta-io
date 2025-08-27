@@ -1,0 +1,13 @@
+{
+  "name": "fidenta-lead-gen",
+  "version": "1.0.0",
+  "description": "Fidenta Lead Generation System",
+  "scripts": {
+    "start": "npx live-server --port=8080 --open=/",
+    "serve": "npx http-server -p 8080 -o"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "http-server": "^14.1.1"
+  }
+}

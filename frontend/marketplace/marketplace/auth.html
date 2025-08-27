@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broker Login - Lead Marketplace</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .tab-active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body class="hero-gradient min-h-screen">
+
+    <!-- Header -->
+    <header class="py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-white">
+                    LeadMarket Pro
+                </h1>
+                <a href="index.html" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Marketplace
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex items-center justify-center min-h-[calc(100vh-120px)] px-4">
+        <div class="form-container max-w-md w-full rounded-lg shadow-xl p-8">
+            
+            <!-- Tabs -->
+            <div class="flex mb-8">
+                <button onclick="switchTab('login')" id="loginTab" class="flex-1 py-2 px-4 rounded-l-lg border-r tab-active transition-colors">
+                    Sign In
+                </button>
+                <button onclick="switchTab('register')" id="registerTab" class="flex-1 py-2 px-4 rounded-r-lg transition-colors border border-gray-300">
+                    Register
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="space-y-4">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Welcome Back</h2>
+                    <p class="text-gray-600 mt-2">Sign in to access premium leads</p>
+                </div>
+
+                <form onsubmit="handleLogin(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="loginEmail" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="your@email.com">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="loginPassword" required 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="••••••••">
+                                <button type="button" onclick="togglePassword('loginPassword')" 
+                                        class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center">
+                    <a href="#" onclick="showForgotPassword()" class="text-sm text-blue-600 hover:text-blue-800">
+                        Forgot your password?
+                    </a>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="space-y-4 hidden">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Get Started</h2>
+                    <p class="text-gray-600 mt-2">Join our premium lead marketplace</p>
+                </div>
+
+                <form onsubmit="handleRegister(event)">
+                    <div class="space-y-4">
+                        <!-- Company Information -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="firstName" required 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="lastName" required 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="Doe">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                            <input type="text" id="companyName" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="ABC Lending Corp">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Company Type</label>
+                            <select id="companyType" required 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select Company Type</option>
+                                <option value="direct-lender">Direct Lender</option>
+                                <option value="broker">Loan Broker</option>
+                                <option value="lead-company">Lead Generation Company</option>
+                                <option value="marketing-agency">Marketing Agency</option>
+                            </select>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="john@abclending.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="(555) 123-4567">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password" required minlength="8"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                       placeholder="••••••••">
+                                <button type="button" onclick="togglePassword('password')" 
+                                        class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Minimum 8 characters required</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                            <input type="password" id="confirmPassword" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="••••••••">
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="flex items-start">
+                            <input type="checkbox" id="termsAccepted" required class="mt-1 mr-3">
+                            <label for="termsAccepted" class="text-sm text-gray-600">
+                                I agree to the <a href="#" class="text-blue-600 hover:text-blue-800">Terms of Service</a> 
+                                and <a href="#" class="text-blue-600 hover:text-blue-800">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            <i class="fas fa-user-plus mr-2"></i>Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="hidden text-center py-8">
+                <i class="fas fa-spinner fa-spin text-3xl text-blue-600 mb-4"></i>
+                <p class="text-gray-600">Processing your request...</p>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="hidden text-center py-8">
+                <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Welcome to LeadMarket Pro!</h3>
+                <p class="text-gray-600 mb-6">Your account has been created successfully.</p>
+                <button onclick="redirectToMarketplace()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    Start Browsing Leads
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="max-w-4xl mx-auto px-4 py-12 text-white">
+        <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold mb-4">Why Choose LeadMarket Pro?</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <i class="fas fa-star text-4xl mb-4 text-yellow-300"></i>
+                <h4 class="font-bold text-lg mb-2">Premium Quality</h4>
+                <p class="text-blue-100">High-quality, pre-qualified leads with detailed scoring and verification</p>
+            </div>
+            
+            <div class="text-center">
+                <i class="fas fa-bolt text-4xl mb-4 text-yellow-300"></i>
+                <h4 class="font-bold text-lg mb-2">Instant Delivery</h4>
+                <p class="text-blue-100">Get full contact details immediately after purchase with instant notifications</p>
+            </div>
+            
+            <div class="text-center">
+                <i class="fas fa-shield-alt text-4xl mb-4 text-yellow-300"></i>
+                <h4 class="font-bold text-lg mb-2">Money Back Guarantee</h4>
+                <p class="text-blue-100">30-day satisfaction guarantee on all lead purchases</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTab = 'login';
+
+        // Switch between login and register tabs
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tab styling
+            document.getElementById('loginTab').classList.toggle('tab-active', tab === 'login');
+            document.getElementById('loginTab').classList.toggle('border', tab !== 'login');
+            document.getElementById('loginTab').classList.toggle('border-gray-300', tab !== 'login');
+            
+            document.getElementById('registerTab').classList.toggle('tab-active', tab === 'register');
+            document.getElementById('registerTab').classList.toggle('border', tab !== 'register');
+            document.getElementById('registerTab').classList.toggle('border-gray-300', tab !== 'register');
+            
+            // Show/hide forms
+            document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                button.className = 'fas fa-eye';
+            }
+        }
+
+        // Handle login form submission
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/brokers/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Store token
+                    localStorage.setItem('brokerToken', result.token);
+                    
+                    // Show success and redirect
+                    showSuccess('Login successful! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                    
+                } else {
+                    hideLoading();
+                    showError(result.error || 'Login failed');
+                }
+                
+            } catch (error) {
+                hideLoading();
+                showError('Network error. Please try again.');
+                console.error('Login error:', error);
+            }
+        }
+
+        // Handle register form submission
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                companyName: document.getElementById('companyName').value,
+                companyType: document.getElementById('companyType').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value
+            };
+            
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate passwords match
+            if (formData.password !== confirmPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/brokers/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Store token
+                    localStorage.setItem('brokerToken', result.token);
+                    
+                    // Show success message
+                    hideLoading();
+                    showSuccessMessage();
+                    
+                } else {
+                    hideLoading();
+                    showError(result.error || 'Registration failed');
+                }
+                
+            } catch (error) {
+                hideLoading();
+                showError('Network error. Please try again.');
+                console.error('Registration error:', error);
+            }
+        }
+
+        // Show loading state
+        function showLoading() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            document.getElementById('loadingState').classList.add('hidden');
+            
+            if (currentTab === 'login') {
+                document.getElementById('loginForm').classList.remove('hidden');
+            } else {
+                document.getElementById('registerForm').classList.remove('hidden');
+            }
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+        }
+
+        // Show error message
+        function showError(message) {
+            alert(message); // Simple for now, could be improved with a toast notification
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            alert(message); // Simple for now, could be improved with a toast notification
+        }
+
+        // Redirect to marketplace
+        function redirectToMarketplace() {
+            window.location.href = 'index.html';
+        }
+
+        // Show forgot password (placeholder)
+        function showForgotPassword() {
+            alert('Password reset functionality coming soon. Please contact support.');
+        }
+
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('brokerToken');
+            if (token) {
+                // Verify token is still valid
+                fetch('/api/brokers/profile', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Already logged in, redirect to marketplace
+                        window.location.href = 'index.html';
+                    }
+                })
+                .catch(() => {
+                    // Token invalid, remove it
+                    localStorage.removeItem('brokerToken');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

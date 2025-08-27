@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidenta | Complete Business Funding Application</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Logo Styling */
+        .logo-text {
+            background: linear-gradient(135deg, #2563EB 0%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+        }
+        
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 2px;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Progress Steps */
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .step-indicator.active {
+            background: linear-gradient(135deg, #2563EB 0%, #8B5CF6 100%);
+            color: white;
+        }
+        
+        .step-indicator.completed {
+            background: #10B981;
+            color: white;
+        }
+        
+        /* File Upload Area */
+        .upload-area {
+            border: 2px dashed #CBD5E0;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #2563EB;
+            background-color: #EFF6FF;
+        }
+        
+        .upload-area.dragover {
+            border-color: #10B981;
+            background-color: #F0FDF4;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2563EB;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <svg class="w-8 h-8 mr-2" viewBox="0 0 40 40" fill="none">
+                        <rect x="2" y="2" width="36" height="36" rx="8" fill="url(#logo-gradient)" opacity="0.1"/>
+                        <path d="M20 10L25 15L20 20L15 15L20 10Z" fill="url(#logo-gradient)"/>
+                        <path d="M20 20L25 25L20 30L15 25L20 20Z" fill="url(#logo-gradient)" opacity="0.6"/>
+                        <defs>
+                            <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2563EB"/>
+                                <stop offset="100%" stop-color="#7C3AED"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text text-3xl">Fidenta</span>
+                    <span class="logo-dot"></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-4 text-sm">
+                    <span class="text-gray-600">Need help?</span>
+                    <a href="tel:1-888-343-3682" class="text-blue-600 font-semibold">1-888-FIDENTA</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Progress Bar -->
+    <div class="bg-white border-b py-4">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-lg font-semibold text-gray-900">Business Funding Application</h2>
+                <span class="text-sm text-gray-600">
+                    Step <span id="currentStep">1</span> of 5
+                </span>
+            </div>
+            
+            <!-- Progress Steps -->
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step1Indicator">
+                            1
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-2"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Business Info</p>
+                </div>
+                
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-bold" id="step2Indicator">
+                            2
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-2"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Financial Details</p>
+                </div>
+                
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-bold" id="step3Indicator">
+                            3
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-2"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Credit Info</p>
+                </div>
+                
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-bold" id="step4Indicator">
+                            4
+                        </div>
+                        <div class="flex-1 h-1 bg-gray-200 mx-2"></div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Contact</p>
+                </div>
+                
+                <div class="flex-1">
+                    <div class="flex items-center">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-bold" id="step5Indicator">
+                            5
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-600 mt-2">Documents</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Form Container -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <form id="completeApplicationForm" class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+            
+            <!-- Step 1: Business Information -->
+            <div id="step1" class="step-content">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Business Information</h3>
+                <p class="text-gray-600 mb-6">Tell us about your business</p>
+                
+                <div class="space-y-5">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Legal Business Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="businessName" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                DBA (If applicable)
+                            </label>
+                            <input type="text" name="dba"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Business Type <span class="text-red-500">*</span>
+                            </label>
+                            <select name="businessType" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Select business type</option>
+                                <option value="llc">LLC</option>
+                                <option value="corporation">Corporation</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="sole-proprietorship">Sole Proprietorship</option>
+                                <option value="nonprofit">Non-Profit</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Industry <span class="text-red-500">*</span>
+                            </label>
+                            <select name="industry" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Select industry</option>
+                                <option value="retail">Retail</option>
+                                <option value="restaurant">Restaurant/Food Service</option>
+                                <option value="construction">Construction</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="professional-services">Professional Services</option>
+                                <option value="technology">Technology</option>
+                                <option value="real-estate">Real Estate</option>
+                                <option value="ecommerce">E-commerce</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Federal Tax ID (EIN) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="ein" required placeholder="XX-XXXXXXX"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Date Business Started <span class="text-red-500">*</span>
+                            </label>
+                            <input type="date" name="businessStartDate" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Business Address <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="businessAddress" required placeholder="Street Address"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 mb-3">
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <input type="text" name="city" required placeholder="City"
+                                   class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                            <select name="state" required
+                                    class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">State</option>
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <!-- Add all states -->
+                            </select>
+                            <input type="text" name="zipCode" required placeholder="ZIP"
+                                   class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                            <input type="tel" name="businessPhone" required placeholder="Phone"
+                                   class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2: Financial Information -->
+            <div id="step2" class="step-content hidden">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Financial Information</h3>
+                <p class="text-gray-600 mb-6">Help us understand your financial needs</p>
+                
+                <div class="space-y-5">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Average Monthly Revenue <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="monthlyRevenue" required placeholder="$50,000"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Annual Revenue <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="annualRevenue" required placeholder="$600,000"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Funding Amount Requested <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="fundingAmount" required placeholder="$100,000"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Use of Funds <span class="text-red-500">*</span>
+                            </label>
+                            <select name="fundingPurpose" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Select purpose</option>
+                                <option value="working-capital">Working Capital</option>
+                                <option value="expansion">Business Expansion</option>
+                                <option value="equipment">Equipment Purchase</option>
+                                <option value="inventory">Inventory</option>
+                                <option value="marketing">Marketing/Advertising</option>
+                                <option value="renovation">Renovation/Remodeling</option>
+                                <option value="debt-consolidation">Debt Consolidation</option>
+                                <option value="payroll">Payroll</option>
+                                <option value="emergency">Emergency Expenses</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Average Bank Balance
+                            </label>
+                            <input type="text" name="bankBalance" placeholder="$25,000"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                How Soon Do You Need Funding? <span class="text-red-500">*</span>
+                            </label>
+                            <select name="fundingTimeframe" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Select timeframe</option>
+                                <option value="immediate">Immediately (1-2 days)</option>
+                                <option value="week">Within a week</option>
+                                <option value="month">Within a month</option>
+                                <option value="flexible">I'm flexible</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Do you accept credit cards? <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="acceptsCreditCards" value="yes" required class="mr-2">
+                                <span>Yes</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="acceptsCreditCards" value="no" required class="mr-2">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="creditCardVolume" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Average Monthly Credit Card Sales
+                        </label>
+                        <input type="text" name="creditCardSales" placeholder="$30,000"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Credit Information -->
+            <div id="step3" class="step-content hidden">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Credit Information</h3>
+                <p class="text-gray-600 mb-6">This helps us match you with the right lenders</p>
+                
+                <div class="space-y-5">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Personal Credit Score (Estimate) <span class="text-red-500">*</span>
+                            </label>
+                            <select name="creditScore" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Select range</option>
+                                <option value="750+">Excellent (750+)</option>
+                                <option value="700-749">Good (700-749)</option>
+                                <option value="650-699">Fair (650-699)</option>
+                                <option value="600-649">Average (600-649)</option>
+                                <option value="550-599">Below Average (550-599)</option>
+                                <option value="500-549">Poor (500-549)</option>
+                                <option value="<500">Very Poor (Below 500)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Have you filed for bankruptcy?
+                            </label>
+                            <select name="bankruptcy"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="no">No</option>
+                                <option value="yes-discharged">Yes - Discharged</option>
+                                <option value="yes-active">Yes - Active</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Current Business Debt
+                        </label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="currentDebt" value="none" class="mr-2">
+                                <span>No existing business debt</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="currentDebt" value="term-loan" class="mr-2">
+                                <span>Term Loan</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="currentDebt" value="mca" class="mr-2">
+                                <span>Merchant Cash Advance</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="currentDebt" value="loc" class="mr-2">
+                                <span>Line of Credit</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="currentDebt" value="equipment" class="mr-2">
+                                <span>Equipment Financing</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="currentDebt" value="credit-cards" class="mr-2">
+                                <span>Business Credit Cards</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Number of MCA/Advance Positions
+                            </label>
+                            <select name="mcaPositions"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="0">None</option>
+                                <option value="1">1 Position</option>
+                                <option value="2">2 Positions</option>
+                                <option value="3">3 Positions</option>
+                                <option value="4+">4+ Positions</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Outstanding Business Debt Amount
+                            </label>
+                            <input type="text" name="outstandingDebt" placeholder="$50,000"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Are there any outstanding tax liens or judgments?
+                        </label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="taxLiens" value="no" class="mr-2">
+                                <span>No</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="taxLiens" value="yes" class="mr-2">
+                                <span>Yes</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 4: Contact Information -->
+            <div id="step4" class="step-content hidden">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Contact Information</h3>
+                <p class="text-gray-600 mb-6">How can we reach you?</p>
+                
+                <div class="space-y-5">
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                First Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="firstName" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Last Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="lastName" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" name="email" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Mobile Phone <span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" name="phone" required placeholder="(555) 123-4567"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Your Title/Position <span class="text-red-500">*</span>
+                            </label>
+                            <select name="title" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Select title</option>
+                                <option value="owner">Owner</option>
+                                <option value="co-owner">Co-Owner</option>
+                                <option value="president">President</option>
+                                <option value="ceo">CEO</option>
+                                <option value="cfo">CFO</option>
+                                <option value="partner">Partner</option>
+                                <option value="member">Member</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Ownership Percentage <span class="text-red-500">*</span>
+                            </label>
+                            <input type="number" name="ownershipPercentage" required min="0" max="100" placeholder="51"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Home Address (Personal Guarantee may be required)
+                        </label>
+                        <input type="text" name="homeAddress" placeholder="Street Address"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 mb-3">
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <input type="text" name="homeCity" placeholder="City"
+                                   class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                            <select name="homeState"
+                                    class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">State</option>
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <!-- Add all states -->
+                            </select>
+                            <input type="text" name="homeZip" placeholder="ZIP"
+                                   class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Best Time to Call
+                        </label>
+                        <select name="bestTimeToCall"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                            <option value="morning">Morning (9am-12pm)</option>
+                            <option value="afternoon">Afternoon (12pm-5pm)</option>
+                            <option value="evening">Evening (5pm-7pm)</option>
+                            <option value="anytime">Anytime</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 5: Document Upload -->
+            <div id="step5" class="step-content hidden">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Upload Documents (Optional)</h3>
+                <p class="text-gray-600 mb-6">Upload documents now for faster approval and better rates</p>
+                
+                <div class="space-y-5">
+                    <!-- Bank Statements Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Bank Statements (Last 3-6 months)
+                        </label>
+                        <div class="upload-area p-8 rounded-lg text-center cursor-pointer" id="bankStatementUpload">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                            <p class="text-gray-600 mb-2">Drag & drop files here or click to browse</p>
+                            <p class="text-sm text-gray-500">PDF, JPG, PNG up to 10MB each</p>
+                            <input type="file" id="bankStatementFiles" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                        </div>
+                        <div id="bankStatementList" class="mt-3 space-y-2"></div>
+                    </div>
+                    
+                    <!-- Tax Returns Upload -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Business Tax Returns (Optional)
+                        </label>
+                        <div class="upload-area p-8 rounded-lg text-center cursor-pointer" id="taxReturnUpload">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <p class="text-gray-600 mb-2">Upload your business tax returns</p>
+                            <p class="text-sm text-gray-500">Last 1-2 years preferred</p>
+                            <input type="file" id="taxReturnFiles" multiple accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                        </div>
+                        <div id="taxReturnList" class="mt-3 space-y-2"></div>
+                    </div>
+                    
+                    <!-- Other Documents -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Additional Documents (Optional)
+                        </label>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="additionalDocs" value="profit-loss" class="mr-3">
+                                <span class="text-sm">Profit & Loss Statement</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="additionalDocs" value="balance-sheet" class="mr-3">
+                                <span class="text-sm">Balance Sheet</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="additionalDocs" value="ar-aging" class="mr-3">
+                                <span class="text-sm">Accounts Receivable Aging</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="checkbox" name="additionalDocs" value="business-plan" class="mr-3">
+                                <span class="text-sm">Business Plan</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 text-blue-600 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <p class="text-sm text-blue-800 font-medium">Why upload documents?</p>
+                                <ul class="text-sm text-blue-700 mt-1 space-y-1">
+                                    <li>• Get approved 3x faster</li>
+                                    <li>• Access better rates and terms</li>
+                                    <li>• Qualify for more funding options</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between mt-8 pt-6 border-t">
+                <button type="button" id="prevBtn" class="hidden px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition">
+                    ← Previous
+                </button>
+                <button type="button" id="nextBtn" class="ml-auto px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
+                    Next Step →
+                </button>
+                <button type="submit" id="submitBtn" class="hidden ml-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition">
+                    Complete Application →
+                </button>
+            </div>
+        </form>
+        
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-8 text-center">
+                <div class="spinner mx-auto mb-4"></div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Processing Your Application...</h3>
+                <p class="text-sm text-gray-600">Evaluating qualification for 8+ loan products</p>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Form state management
+        let currentStep = 1;
+        const totalSteps = 5;
+        const formData = new FormData();
+        const uploadedFiles = {
+            bankStatements: [],
+            taxReturns: [],
+            other: []
+        };
+        
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            setupNavigation();
+            setupFileUploads();
+            setupDynamicFields();
+        });
+        
+        function setupNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    saveStepData(currentStep);
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    saveStepData(currentStep);
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            });
+            
+            document.getElementById('completeApplicationForm').addEventListener('submit', handleSubmit);
+        }
+        
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.remove('hidden');
+            
+            // Update step counter
+            document.getElementById('currentStep').textContent = step;
+            
+            // Update indicators
+            for (let i = 1; i <= totalSteps; i++) {
+                const indicator = document.getElementById(`step${i}Indicator`);
+                indicator.classList.remove('active', 'completed');
+                
+                if (i < step) {
+                    indicator.classList.add('completed');
+                    indicator.innerHTML = '✓';
+                } else if (i === step) {
+                    indicator.classList.add('active');
+                    indicator.innerHTML = i;
+                } else {
+                    indicator.classList.add('bg-gray-300');
+                    indicator.innerHTML = i;
+                }
+            }
+            
+            // Update buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (step === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+            
+            if (step === totalSteps) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function validateStep(step) {
+            const stepEl = document.getElementById(`step${step}`);
+            const requiredInputs = stepEl.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredInputs.forEach(input => {
+                if (!input.value || (input.type === 'radio' && !stepEl.querySelector(`[name="${input.name}"]:checked`))) {
+                    input.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields');
+            }
+            
+            return isValid;
+        }
+        
+        function saveStepData(step) {
+            const stepEl = document.getElementById(`step${step}`);
+            const inputs = stepEl.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    if (input.checked) {
+                        formData.append(input.name, input.value);
+                    }
+                } else if (input.type !== 'file') {
+                    formData.set(input.name, input.value);
+                }
+            });
+        }
+        
+        function setupFileUploads() {
+            // Bank statements upload
+            const bankUpload = document.getElementById('bankStatementUpload');
+            const bankInput = document.getElementById('bankStatementFiles');
+            
+            bankUpload.addEventListener('click', () => bankInput.click());
+            bankInput.addEventListener('change', (e) => handleFileUpload(e, 'bankStatements'));
+            
+            // Tax returns upload
+            const taxUpload = document.getElementById('taxReturnUpload');
+            const taxInput = document.getElementById('taxReturnFiles');
+            
+            taxUpload.addEventListener('click', () => taxInput.click());
+            taxInput.addEventListener('change', (e) => handleFileUpload(e, 'taxReturns'));
+            
+            // Drag and drop
+            [bankUpload, taxUpload].forEach(area => {
+                area.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    area.classList.add('dragover');
+                });
+                
+                area.addEventListener('dragleave', () => {
+                    area.classList.remove('dragover');
+                });
+                
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('dragover');
+                    const type = area.id.includes('bank') ? 'bankStatements' : 'taxReturns';
+                    handleFiles(e.dataTransfer.files, type);
+                });
+            });
+        }
+        
+        function handleFileUpload(e, type) {
+            handleFiles(e.target.files, type);
+        }
+        
+        function handleFiles(files, type) {
+            const listId = type === 'bankStatements' ? 'bankStatementList' : 'taxReturnList';
+            const listEl = document.getElementById(listId);
+            
+            Array.from(files).forEach(file => {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert(`${file.name} is too large. Maximum size is 10MB.`);
+                    return;
+                }
+                
+                uploadedFiles[type].push(file);
+                formData.append(`${type}[]`, file);
+                
+                // Display uploaded file
+                const fileEl = document.createElement('div');
+                fileEl.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg';
+                fileEl.innerHTML = `
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-sm text-gray-700">${file.name}</span>
+                        <span class="text-xs text-gray-500 ml-2">(${(file.size / 1024).toFixed(1)}KB)</span>
+                    </div>
+                    <button type="button" onclick="removeFile('${type}', '${file.name}')" class="text-red-500 hover:text-red-700">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                `;
+                listEl.appendChild(fileEl);
+            });
+        }
+        
+        function removeFile(type, fileName) {
+            uploadedFiles[type] = uploadedFiles[type].filter(f => f.name !== fileName);
+            // Update display
+            location.reload(); // Simple refresh for demo
+        }
+        
+        function setupDynamicFields() {
+            // Show/hide credit card volume field
+            document.querySelectorAll('[name="acceptsCreditCards"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const volumeField = document.getElementById('creditCardVolume');
+                    if (e.target.value === 'yes') {
+                        volumeField.classList.remove('hidden');
+                    } else {
+                        volumeField.classList.add('hidden');
+                    }
+                });
+            });
+        }
+        
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            if (!validateStep(currentStep)) return;
+            
+            saveStepData(currentStep);
+            
+            // Show loading
+            document.getElementById('loadingState').classList.remove('hidden');
+            
+            // Submit to server
+            try {
+                const response = await fetch('/api/leads/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Store results
+                    sessionStorage.setItem('leadId', result.leadId);
+                    sessionStorage.setItem('qualificationResults', JSON.stringify(result));
+                    
+                    // Redirect to pre-qualification page
+                    window.location.href = '/pre-qualification.html';
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('There was an error submitting your application. Please try again.');
+            } finally {
+                document.getElementById('loadingState').classList.add('hidden');
+            }
+        }
+        
+        // Phone formatting
+        document.querySelector('[name="phone"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = `(${value}`;
+                } else if (value.length <= 6) {
+                    value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                } else {
+                    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                }
+            }
+            e.target.value = value;
+        });
+        
+        // Currency formatting
+        ['monthlyRevenue', 'annualRevenue', 'fundingAmount', 'bankBalance', 'creditCardSales', 'outstandingDebt'].forEach(field => {
+            document.querySelector(`[name="${field}"]`)?.addEventListener('blur', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value) {
+                    e.target.value = '$' + parseInt(value).toLocaleString();
+                }
+            });
+        });
+        
+        // EIN formatting
+        document.querySelector('[name="ein"]')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.slice(0, 2) + '-' + value.slice(2, 9);
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

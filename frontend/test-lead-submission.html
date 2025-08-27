@@ -1,0 +1,353 @@
+<!-- Fidenta.io deployment pending: API will move to https://fidenta.netlify.app -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Lead Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            display: none;
+        }
+        .results h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .tier-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .tier-platinum { background: #e7f3ff; color: #0066cc; }
+        .tier-gold { background: #fff4e6; color: #ff9800; }
+        .tier-silver { background: #f0f0f0; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Lead Submission</h1>
+        
+        <div class="info-box">
+            <strong>Backend Status:</strong> 
+            <span id="backendStatus">Checking...</span>
+        </div>
+        
+        <form id="testForm">
+            <div class="form-group">
+                <label>Business Name*</label>
+                <input type="text" name="businessName" value="Acme Technologies" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Contact Name*</label>
+                <input type="text" name="contactName" value="John Smith" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email*</label>
+                <input type="email" name="email" value="john@acmetech.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Phone*</label>
+                <input type="tel" name="phone" value="555-123-4567" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Annual Revenue</label>
+                <input type="number" name="annualRevenue" value="750000">
+            </div>
+            
+            <div class="form-group">
+                <label>Loan Amount Needed*</label>
+                <input type="number" name="loanAmount" value="150000" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Credit Score</label>
+                <select name="creditScore">
+                    <option value="750">750+</option>
+                    <option value="700" selected>700-749</option>
+                    <option value="650">650-699</option>
+                    <option value="600">600-649</option>
+                    <option value="550">550-599</option>
+                    <option value="500">Below 550</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Months in Business</label>
+                <input type="number" name="monthsInBusiness" value="36">
+            </div>
+            
+            <div class="form-group">
+                <label>Industry</label>
+                <select name="industry">
+                    <option value="Technology" selected>Technology</option>
+                    <option value="Retail">Retail</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Construction">Construction</option>
+                    <option value="Restaurant">Restaurant</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Urgency</label>
+                <select name="urgency">
+                    <option value="immediate">Immediate (Today)</option>
+                    <option value="week" selected>This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="flexible">Flexible</option>
+                </select>
+            </div>
+            
+            <button type="submit">Submit Test Lead</button>
+            <button type="button" onclick="fillRandomData()">Generate Random Data</button>
+        </form>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="results" class="results">
+            <h3>Lead Scoring Results</h3>
+            <div id="resultsContent"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Check backend status
+        async function checkBackend() {
+            const statusEl = document.getElementById('backendStatus');
+            const BACKEND_URL = window.location.hostname === 'localhost' 
+                ? 'https://fidenta.netlify.app'
+                : 'https://fidenta.netlify.app';
+            
+            try {
+                const response = await fetch(BACKEND_URL);
+                const data = await response.json();
+                statusEl.innerHTML = '✅ Connected - ' + data.message;
+                statusEl.style.color = 'green';
+            } catch (error) {
+                statusEl.innerHTML = '❌ Not connected - Start the backend server';
+                statusEl.style.color = 'red';
+            }
+        }
+        
+        checkBackend();
+        setInterval(checkBackend, 5000); // Check every 5 seconds
+        
+        // Handle form submission
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const leadData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (['annualRevenue', 'loanAmount', 'creditScore', 'monthsInBusiness'].includes(key)) {
+                    leadData[key] = parseInt(value) || 0;
+                } else {
+                    leadData[key] = value;
+                }
+            }
+            
+            // Add required fields
+            leadData.city = 'New York';
+            leadData.state = 'NY';
+            leadData.zipCode = '10001';
+            leadData.source = 'test-page';
+            leadData.ipAddress = '127.0.0.1';
+            leadData.userAgent = navigator.userAgent;
+            
+            const statusEl = document.getElementById('status');
+            const resultsEl = document.getElementById('results');
+            const button = this.querySelector('button[type="submit"]');
+            
+            button.disabled = true;
+            button.textContent = 'Submitting...';
+            statusEl.className = 'status';
+            resultsEl.style.display = 'none';
+            
+            try {
+                const API_URL = window.location.hostname === 'localhost' 
+                    ? 'https://fidenta.netlify.app/api/leads'
+                    : 'https://fidenta.netlify.app/api/leads';
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(leadData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusEl.className = 'status success';
+                    statusEl.innerHTML = '✅ Lead submitted successfully!';
+                    
+                    // Show results
+                    resultsEl.style.display = 'block';
+                    resultsEl.querySelector('#resultsContent').innerHTML = `
+                        <div class="result-item">
+                            <span>Lead ID:</span>
+                            <strong>${result.lead._id}</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Score:</span>
+                            <strong>${result.lead.leadScore}/100</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Grade:</span>
+                            <strong>${result.lead.leadGrade}</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Tier:</span>
+                            <span class="tier-badge tier-${result.lead.scoringTier.toLowerCase()}">${result.lead.scoringTier}</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Estimated Value:</span>
+                            <strong>$${getLeadValue(result.lead.scoringTier)}</strong>
+                        </div>
+                    `;
+                    
+                    // Reset form after 3 seconds
+                    setTimeout(() => {
+                        this.reset();
+                        fillRandomData();
+                    }, 3000);
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.innerHTML = '❌ Error: ' + error.message;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Submit Test Lead';
+            }
+        });
+        
+        function getLeadValue(tier) {
+            const values = {
+                'PLATINUM': '150-375',
+                'GOLD': '100-250',
+                'SILVER': '75-187',
+                'BRONZE': '50-125',
+                'STANDARD': '25-62',
+                'BASIC': '10-25'
+            };
+            return values[tier] || '10-25';
+        }
+        
+        function fillRandomData() {
+            const businesses = ['Tech Innovations', 'Global Solutions', 'Prime Services', 'Alpha Corp', 'Nexus Industries'];
+            const names = ['Sarah Johnson', 'Michael Chen', 'Jennifer Davis', 'Robert Wilson', 'Lisa Anderson'];
+            
+            document.querySelector('[name="businessName"]').value = businesses[Math.floor(Math.random() * businesses.length)] + ' ' + Math.floor(Math.random() * 1000);
+            document.querySelector('[name="contactName"]').value = names[Math.floor(Math.random() * names.length)];
+            document.querySelector('[name="email"]').value = 'test' + Math.floor(Math.random() * 10000) + '@example.com';
+            document.querySelector('[name="phone"]').value = '555-' + Math.floor(Math.random() * 900 + 100) + '-' + Math.floor(Math.random() * 9000 + 1000);
+            document.querySelector('[name="annualRevenue"]').value = Math.floor(Math.random() * 2000000 + 100000);
+            document.querySelector('[name="loanAmount"]').value = Math.floor(Math.random() * 500000 + 10000);
+            document.querySelector('[name="monthsInBusiness"]').value = Math.floor(Math.random() * 120 + 6);
+        }
+    </script>
+</body>
+</html>
