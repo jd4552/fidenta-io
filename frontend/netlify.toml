@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+
+# Serve index.html for root
+[[redirects]]
+  from = "/"
+  to = "/templates/business-loan/index-complete.html"
+  status = 200
+
+# Allow all other files to be served normally
