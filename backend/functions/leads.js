@@ -13,6 +13,14 @@ const leadSchema = new mongoose.Schema({
     leadScore: Number,
     leadGrade: String,
     scoringTier: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    industry: String,
+    urgency: String,
+    source: String,
+    ipAddress: String,
+    userAgent: String,
     createdAt: { type: Date, default: Date.now }
 });
 
@@ -45,14 +53,21 @@ async function dbConnect() {
     return cached.conn;
 }
 
-module.exports = async (req, res) => {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+exports.handler = async (event, context) => {
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json'
+    };
     
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+    // Handle OPTIONS
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
+        };
     }
     
     try {
@@ -69,9 +84,11 @@ module.exports = async (req, res) => {
             }
         }
         
-        if (req.method === 'POST') {
+        if (event.httpMethod === 'POST') {
+            // Parse body
+            const leadData = JSON.parse(event.body);
+            
             // Calculate lead score
-            const leadData = req.body;
             let score = 50; // Base score
             
             // Score based on loan amount
@@ -113,50 +130,74 @@ module.exports = async (req, res) => {
                 const lead = new Lead(leadData);
                 await lead.save();
                 
-                return res.status(200).json({
-                    success: true,
-                    message: 'Lead saved successfully',
-                    lead: lead
-                });
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        message: 'Lead saved successfully',
+                        lead: lead
+                    })
+                };
             } else {
                 // No database, just return the scored lead
-                return res.status(200).json({
-                    success: true,
-                    message: 'Lead scored (database not configured)',
-                    lead: {
-                        ...leadData,
-                        _id: 'temp-' + Date.now()
-                    }
-                });
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        message: 'Lead scored (database not configured)',
+                        lead: {
+                            ...leadData,
+                            _id: 'temp-' + Date.now()
+                        }
+                    })
+                };
             }
-        } else if (req.method === 'GET') {
+        } else if (event.httpMethod === 'GET') {
             // Get leads
             if (Lead) {
                 const leads = await Lead.find().sort({ createdAt: -1 }).limit(50);
-                return res.status(200).json({
-                    success: true,
-                    count: leads.length,
-                    leads: leads
-                });
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        count: leads.length,
+                        leads: leads
+                    })
+                };
             } else {
-                return res.status(200).json({
-                    success: true,
-                    message: 'Database not configured',
-                    leads: []
-                });
+                return {
+                    statusCode: 200,
+                    headers,
+                    body: JSON.stringify({
+                        success: true,
+                        message: 'Database not configured',
+                        leads: []
+                    })
+                };
             }
         } else {
-            return res.status(405).json({
-                success: false,
-                error: 'Method not allowed'
-            });
+            return {
+                statusCode: 405,
+                headers,
+                body: JSON.stringify({
+                    success: false,
+                    error: 'Method not allowed'
+                })
+            };
         }
         
     } catch (error) {
         console.error('API Error:', error);
-        return res.status(500).json({
-            success: false,
-            error: error.message || 'Server error'
-        });
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({
+                success: false,
+                error: error.message || 'Server error'
+            })
+        };
     }
 };

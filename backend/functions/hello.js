@@ -1,14 +1,25 @@
-module.exports = (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+exports.handler = async (event, context) => {
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Content-Type': 'application/json'
+    };
     
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
+        };
     }
     
-    res.status(200).json({ 
-        message: 'Hello from Fidenta Backend API!',
-        endpoint: '/api/hello',
-        timestamp: new Date().toISOString()
-    });
+    return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+            message: 'Hello from Fidenta Backend API!',
+            endpoint: '/api/hello',
+            timestamp: new Date().toISOString()
+        })
+    };
 };

@@ -1,23 +1,35 @@
-// Minimal Vercel serverless function
-module.exports = (req, res) => {
-    // Enable CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// Netlify serverless function
+exports.handler = async (event, context) => {
+    // Handle CORS
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Content-Type': 'application/json'
+    };
     
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
+    // Handle OPTIONS request
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
+        };
     }
     
-    res.status(200).json({
-        message: "Fidenta API - Backend is Working!",
-        status: "Running",
-        timestamp: new Date().toISOString(),
-        endpoints: {
-            root: "/",
-            hello: "/api/hello",
-            leads: "/api/leads"
-        }
-    });
+    // Return API info
+    return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+            message: "Fidenta API - Backend is Working!",
+            status: "Running",
+            timestamp: new Date().toISOString(),
+            endpoints: {
+                root: "/",
+                hello: "/api/hello",
+                leads: "/api/leads"
+            }
+        })
+    };
 };
