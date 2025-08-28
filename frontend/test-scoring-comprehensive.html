@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidenta - Lead Scoring System Test (Working Version)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        .grade-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .json-viewer {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-4 py-4">
+            <h1 class="text-2xl font-bold text-gray-900">Fidenta Lead Scoring Test Interface</h1>
+            <p class="text-sm text-gray-600">Test the underwriting engine and recommendation system</p>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Test Scenarios -->
+        <div class="bg-white rounded-lg shadow p-6 mb-8">
+            <h2 class="text-lg font-semibold mb-4">Quick Test Scenarios</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <button onclick="loadScenario('premium')" class="bg-green-50 hover:bg-green-100 p-4 rounded-lg text-left transition">
+                    <div class="font-semibold text-green-800">Premium Lead</div>
+                    <div class="text-sm text-green-600">High revenue, excellent credit</div>
+                </button>
+                <button onclick="loadScenario('standard')" class="bg-blue-50 hover:bg-blue-100 p-4 rounded-lg text-left transition">
+                    <div class="font-semibold text-blue-800">Standard Lead</div>
+                    <div class="text-sm text-blue-600">Average business metrics</div>
+                </button>
+                <button onclick="loadScenario('mca')" class="bg-yellow-50 hover:bg-yellow-100 p-4 rounded-lg text-left transition">
+                    <div class="font-semibold text-yellow-800">MCA Only</div>
+                    <div class="text-sm text-yellow-600">Low credit, high revenue</div>
+                </button>
+                <button onclick="loadScenario('creditRepair')" class="bg-red-50 hover:bg-red-100 p-4 rounded-lg text-left transition">
+                    <div class="font-semibold text-red-800">Credit Repair</div>
+                    <div class="text-sm text-red-600">Poor credit candidate</div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Input Form -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Left: Input Fields -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Lead Information</h2>
+                
+                <form id="testForm" class="space-y-4">
+                    <!-- Business Information -->
+                    <div class="border-b pb-4">
+                        <h3 class="font-medium text-gray-700 mb-3">Business Details</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Business Type</label>
+                                <select id="businessType" class="w-full px-3 py-2 border rounded-lg">
+                                    <option value="retail">Retail</option>
+                                    <option value="restaurant">Restaurant</option>
+                                    <option value="construction">Construction</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="professional-services">Professional Services</option>
+                                    <option value="ecommerce">E-commerce</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Time in Business (months)</label>
+                                <input type="number" id="timeInBusiness" value="24" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Financial Information -->
+                    <div class="border-b pb-4">
+                        <h3 class="font-medium text-gray-700 mb-3">Financial Information</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Monthly Revenue</label>
+                                <input type="number" id="monthlyRevenue" value="50000" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Bank Balance</label>
+                                <input type="number" id="bankBalance" value="15000" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Funding Amount Needed</label>
+                                <input type="number" id="fundingAmount" value="100000" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Funding Purpose</label>
+                                <select id="fundingPurpose" class="w-full px-3 py-2 border rounded-lg">
+                                    <option value="expansion">Expansion</option>
+                                    <option value="equipment">Equipment</option>
+                                    <option value="inventory">Inventory</option>
+                                    <option value="working-capital">Working Capital</option>
+                                    <option value="emergency">Emergency</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Credit Information -->
+                    <div class="border-b pb-4">
+                        <h3 class="font-medium text-gray-700 mb-3">Credit Information</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Credit Score</label>
+                                <input type="number" id="creditScore" value="680" min="300" max="850" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Personal Income</label>
+                                <input type="number" id="personalIncome" value="75000" class="w-full px-3 py-2 border rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Existing MCA Positions</label>
+                                <select id="existingMCAPositions" class="w-full px-3 py-2 border rounded-lg">
+                                    <option value="0">None</option>
+                                    <option value="1">1 Position</option>
+                                    <option value="2">2 Positions</option>
+                                    <option value="3">3 Positions</option>
+                                    <option value="4">4+ Positions</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-600 mb-1">Funding Timeframe</label>
+                                <select id="fundingTimeframe" class="w-full px-3 py-2 border rounded-lg">
+                                    <option value="immediate">Immediate (ASAP)</option>
+                                    <option value="planned">Within 30 days</option>
+                                    <option value="flexible">Flexible</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Test Button -->
+                    <button type="button" onclick="runTest()" id="runTestBtn"
+                            class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                        Run Scoring Test
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Right: Results -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Scoring Results</h2>
+                
+                <div id="results" class="space-y-6">
+                    <div class="text-center py-12 text-gray-400">
+                        <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        <p>Run a test to see results</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed JSON Output -->
+        <div class="mt-8 bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-4">Raw JSON Output</h2>
+            <div id="jsonOutput" class="json-viewer">
+                <pre>// JSON output will appear here</pre>
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- Inline the engine code to ensure it works -->
+    <script>
+        // Simplified UnderwritingEngine for testing
+        class UnderwritingEngine {
+            constructor() {
+                this.loanProducts = {
+                    termLoan: {
+                        name: 'Term Loan',
+                        minCreditScore: 680,
+                        minMonthlyRevenue: 15000,
+                        minTimeInBusiness: 24
+                    },
+                    mca: {
+                        name: 'Merchant Cash Advance',
+                        minCreditScore: 550,
+                        minMonthlyRevenue: 10000,
+                        minTimeInBusiness: 6
+                    },
+                    sbaLoan: {
+                        name: 'SBA Loan',
+                        minCreditScore: 680,
+                        minMonthlyRevenue: 10000,
+                        minTimeInBusiness: 24
+                    },
+                    lineOfCredit: {
+                        name: 'Business Line of Credit',
+                        minCreditScore: 630,
+                        minMonthlyRevenue: 10000,
+                        minTimeInBusiness: 12
+                    }
+                };
+            }
+
+            evaluateLead(leadData) {
+                const evaluations = {};
+                let bestScore = 0;
+                const qualifiedProducts = [];
+
+                for (const [productKey, product] of Object.entries(this.loanProducts)) {
+                    const score = this.calculateScore(leadData, product);
+                    const qualified = this.isQualified(leadData, product);
+                    
+                    evaluations[productKey] = {
+                        score,
+                        qualified,
+                        productName: product.name
+                    };
+
+                    if (qualified) {
+                        qualifiedProducts.push({
+                            productKey,
+                            productName: product.name,
+                            score
+                        });
+                    }
+
+                    bestScore = Math.max(bestScore, score);
+                }
+
+                // Sort by score
+                qualifiedProducts.sort((a, b) => b.score - a.score);
+
+                // Determine grade
+                let grade = 'F';
+                if (bestScore >= 90) grade = 'A+';
+                else if (bestScore >= 85) grade = 'A';
+                else if (bestScore >= 80) grade = 'B+';
+                else if (bestScore >= 75) grade = 'B';
+                else if (bestScore >= 70) grade = 'C+';
+                else if (bestScore >= 65) grade = 'C';
+                else if (bestScore >= 50) grade = 'D';
+
+                // Check for credit repair candidate
+                const creditRepairCandidate = leadData.creditScore < 580 && leadData.monthlyRevenue >= 5000;
+
+                return {
+                    leadId: 'TEST-' + Date.now(),
+                    overallScore: Math.round(bestScore),
+                    leadGrade: {
+                        grade,
+                        score: Math.round(bestScore),
+                        description: this.getGradeDescription(grade)
+                    },
+                    qualifiedProducts,
+                    evaluations,
+                    creditRepairCandidate,
+                    creditRepairReason: creditRepairCandidate ? 
+                        `Credit score (${leadData.creditScore}) too low for most products. Credit repair recommended.` : null
+                };
+            }
+
+            calculateScore(leadData, product) {
+                let score = 50; // Base score
+
+                // Credit score impact
+                if (leadData.creditScore >= product.minCreditScore + 100) {
+                    score += 30;
+                } else if (leadData.creditScore >= product.minCreditScore + 50) {
+                    score += 20;
+                } else if (leadData.creditScore >= product.minCreditScore) {
+                    score += 10;
+                } else {
+                    score -= 20;
+                }
+
+                // Revenue impact
+                if (leadData.monthlyRevenue >= product.minMonthlyRevenue * 3) {
+                    score += 20;
+                } else if (leadData.monthlyRevenue >= product.minMonthlyRevenue * 2) {
+                    score += 15;
+                } else if (leadData.monthlyRevenue >= product.minMonthlyRevenue) {
+                    score += 10;
+                } else {
+                    score -= 15;
+                }
+
+                // Time in business impact
+                const timeInMonths = leadData.timeInBusinessMonths || 0;
+                if (timeInMonths >= product.minTimeInBusiness * 2) {
+                    score += 15;
+                } else if (timeInMonths >= product.minTimeInBusiness) {
+                    score += 10;
+                } else {
+                    score -= 10;
+                }
+
+                return Math.max(0, Math.min(100, score));
+            }
+
+            isQualified(leadData, product) {
+                return leadData.creditScore >= product.minCreditScore &&
+                       leadData.monthlyRevenue >= product.minMonthlyRevenue &&
+                       (leadData.timeInBusinessMonths || 0) >= product.minTimeInBusiness;
+            }
+
+            getGradeDescription(grade) {
+                const descriptions = {
+                    'A+': 'Premium Lead - Excellent qualification',
+                    'A': 'High Quality Lead',
+                    'B+': 'Good Lead - Strong potential',
+                    'B': 'Above Average Lead',
+                    'C+': 'Average Lead',
+                    'C': 'Fair Lead',
+                    'D': 'Below Average Lead',
+                    'F': 'Poor Lead - Consider credit repair'
+                };
+                return descriptions[grade] || 'Unknown';
+            }
+        }
+
+        // Test scenarios
+        const scenarios = {
+            premium: {
+                businessType: 'technology',
+                timeInBusiness: 48,
+                monthlyRevenue: 250000,
+                bankBalance: 100000,
+                fundingAmount: 500000,
+                fundingPurpose: 'expansion',
+                creditScore: 780,
+                personalIncome: 200000,
+                existingMCAPositions: '0',
+                fundingTimeframe: 'planned'
+            },
+            standard: {
+                businessType: 'retail',
+                timeInBusiness: 24,
+                monthlyRevenue: 50000,
+                bankBalance: 15000,
+                fundingAmount: 100000,
+                fundingPurpose: 'working-capital',
+                creditScore: 680,
+                personalIncome: 75000,
+                existingMCAPositions: '0',
+                fundingTimeframe: 'flexible'
+            },
+            mca: {
+                businessType: 'restaurant',
+                timeInBusiness: 18,
+                monthlyRevenue: 80000,
+                bankBalance: 5000,
+                fundingAmount: 50000,
+                fundingPurpose: 'emergency',
+                creditScore: 580,
+                personalIncome: 50000,
+                existingMCAPositions: '1',
+                fundingTimeframe: 'immediate'
+            },
+            creditRepair: {
+                businessType: 'retail',
+                timeInBusiness: 12,
+                monthlyRevenue: 20000,
+                bankBalance: 2000,
+                fundingAmount: 25000,
+                fundingPurpose: 'working-capital',
+                creditScore: 480,
+                personalIncome: 40000,
+                existingMCAPositions: '2',
+                fundingTimeframe: 'flexible'
+            }
+        };
+        
+        function loadScenario(type) {
+            const scenario = scenarios[type];
+            
+            // Load values into form
+            for (const [key, value] of Object.entries(scenario)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = value;
+                }
+            }
+            
+            // Run test automatically
+            runTest();
+        }
+        
+        function runTest() {
+            // Show loading state
+            const btn = document.getElementById('runTestBtn');
+            btn.classList.add('loading');
+            btn.textContent = 'Processing...';
+            
+            // Gather form data
+            const formData = {
+                businessType: document.getElementById('businessType').value,
+                industry: document.getElementById('businessType').value,
+                timeInBusinessMonths: parseInt(document.getElementById('timeInBusiness').value),
+                monthlyRevenue: parseFloat(document.getElementById('monthlyRevenue').value),
+                bankBalance: parseFloat(document.getElementById('bankBalance').value),
+                fundingAmount: parseFloat(document.getElementById('fundingAmount').value),
+                fundingPurpose: document.getElementById('fundingPurpose').value,
+                creditScore: parseInt(document.getElementById('creditScore').value),
+                personalCredit: parseInt(document.getElementById('creditScore').value),
+                personalIncome: parseFloat(document.getElementById('personalIncome').value),
+                existingMCAPositions: parseInt(document.getElementById('existingMCAPositions').value),
+                fundingTimeframe: document.getElementById('fundingTimeframe').value
+            };
+            
+            // Run evaluation
+            const engine = new UnderwritingEngine();
+            const results = engine.evaluateLead(formData);
+            
+            // Display results
+            displayResults(results);
+            
+            // Show JSON
+            document.getElementById('jsonOutput').innerHTML = `<pre>${JSON.stringify(results, null, 2)}</pre>`;
+            
+            // Reset button
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                btn.textContent = 'Run Scoring Test';
+            }, 500);
+        }
+        
+        function displayResults(results) {
+            const resultsHTML = `
+                <!-- Overall Score -->
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h3 class="text-xl font-bold">Overall Score</h3>
+                            <p class="text-sm opacity-90">${results.leadGrade.description}</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold">${results.overallScore}</div>
+                            <div class="text-sm">out of 100</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lead Grade -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <h4 class="text-sm text-gray-600 mb-2">Lead Grade</h4>
+                    <div class="flex items-center gap-2">
+                        <span class="grade-badge" style="background: ${getGradeColor(results.leadGrade.grade)}; color: white;">
+                            ${results.leadGrade.grade}
+                        </span>
+                        <span class="text-sm text-gray-700">${results.leadGrade.description}</span>
+                    </div>
+                </div>
+                
+                <!-- Credit Repair Alert -->
+                ${results.creditRepairCandidate ? `
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-yellow-900 mb-1">Credit Repair Candidate</h4>
+                        <p class="text-sm text-yellow-800">${results.creditRepairReason}</p>
+                        <button class="mt-2 px-4 py-2 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700">
+                            Route to Credit Repair Partner
+                        </button>
+                    </div>
+                ` : ''}
+                
+                <!-- Product Qualifications -->
+                <div>
+                    <h4 class="font-semibold mb-3">Product Qualification</h4>
+                    <div class="space-y-2">
+                        ${Object.entries(results.evaluations).map(([product, eval]) => `
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <span class="grade-badge" style="background: ${eval.qualified ? '#10B981' : '#EF4444'}; color: white;">
+                                        ${eval.qualified ? '✓' : '✗'}
+                                    </span>
+                                    <span class="font-medium">${eval.productName}</span>
+                                </div>
+                                <div class="text-sm text-gray-600">
+                                    Score: ${eval.score}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- Qualified Products -->
+                ${results.qualifiedProducts.length > 0 ? `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-green-900 mb-2">Qualified for ${results.qualifiedProducts.length} Products</h4>
+                        <ul class="space-y-1">
+                            ${results.qualifiedProducts.map(p => `
+                                <li class="text-sm text-green-800">• ${p.productName} (Score: ${p.score})</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                ` : `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-red-900">No Product Qualifications</h4>
+                        <p class="text-sm text-red-800 mt-1">Consider credit repair or alternative funding sources</p>
+                    </div>
+                `}
+            `;
+            
+            document.getElementById('results').innerHTML = resultsHTML;
+        }
+        
+        function getGradeColor(grade) {
+            const colors = {
+                'A+': '#10B981',
+                'A': '#10B981',
+                'B+': '#3B82F6',
+                'B': '#3B82F6',
+                'C+': '#F59E0B',
+                'C': '#F59E0B',
+                'D': '#EF4444',
+                'F': '#991B1B'
+            };
+            return colors[grade] || '#9CA3AF';
+        }
+    </script>
+</body>
+</html>
