@@ -275,7 +275,7 @@
                         <!-- Progress indicator -->
                         <div class="mb-6">
                             <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs text-gray-500">Step <span id="currentStep">1</span> of <span id="totalSteps">11</span></span>
+                                <span class="text-xs text-gray-500">Step <span id="currentStep">1</span> of <span id="totalSteps">10</span></span>
                                 <span class="text-xs text-gray-500"><span id="progressPercent">9</span>% Complete</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2">
@@ -497,32 +497,8 @@
                                 </div>
                             </div>
                             
-                            <!-- Step 8: Do You Accept Credit Cards? -->
+                            <!-- Step 8: Business Name & Email -->
                             <div id="step8" class="form-step hidden">
-                                <h3 class="text-xl font-bold text-gray-900 mb-2">Do you accept credit cards?</h3>
-                                <p class="text-sm text-gray-600 mb-5">This opens up additional funding options</p>
-                                <div class="space-y-3">
-                                    <button type="button" class="cards-btn w-full p-4 border-2 border-gray-200 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition" data-value="yes-high">
-                                        <span class="font-semibold">Yes - High Volume</span>
-                                        <span class="text-sm text-gray-500 block">Over $20,000/month in card sales</span>
-                                    </button>
-                                    <button type="button" class="cards-btn w-full p-4 border-2 border-gray-200 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition" data-value="yes-medium">
-                                        <span class="font-semibold">Yes - Moderate Volume</span>
-                                        <span class="text-sm text-gray-500 block">$5,000 - $20,000/month</span>
-                                    </button>
-                                    <button type="button" class="cards-btn w-full p-4 border-2 border-gray-200 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition" data-value="yes-low">
-                                        <span class="font-semibold">Yes - Low Volume</span>
-                                        <span class="text-sm text-gray-500 block">Under $5,000/month</span>
-                                    </button>
-                                    <button type="button" class="cards-btn w-full p-4 border-2 border-gray-200 rounded-lg text-left hover:border-blue-500 hover:bg-blue-50 transition" data-value="no">
-                                        <span class="font-semibold">No Credit Card Processing</span>
-                                        <span class="text-sm text-gray-500 block">Cash, check, or ACH only</span>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- Step 9: Business Name & Email -->
-                            <div id="step9" class="form-step hidden">
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">Almost done! What's your business name?</h3>
                                 <p class="text-sm text-gray-600 mb-5">We'll use this for your pre-qualification</p>
                                 <div class="space-y-4">
@@ -548,8 +524,8 @@
                                 </button>
                             </div>
                             
-                            <!-- Step 10: Contact Info -->
-                            <div id="step10" class="form-step hidden">
+                            <!-- Step 9: Contact Info -->
+                            <div id="step9" class="form-step hidden">
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">How can we reach you?</h3>
                                 <p class="text-sm text-gray-600 mb-5">Your funding specialist will call within 60 minutes</p>
                                 <div class="space-y-4">
@@ -581,8 +557,8 @@
                                 </button>
                             </div>
                             
-                            <!-- Step 11: Document Upload (Optional) -->
-                            <div id="step11" class="form-step hidden">
+                            <!-- Step 10: Document Upload (Optional) -->
+                            <div id="step10" class="form-step hidden">
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">Speed up your approval! 🚀</h3>
                                 <p class="text-sm text-gray-600 mb-5">Upload documents now for faster processing and better rates (optional)</p>
                                 
@@ -824,7 +800,7 @@
     <script>
         // Form state management
         let currentStep = 1;
-        const totalSteps = 11;
+        const totalSteps = 10;
         const formData = {};
         const uploadedFiles = {
             bankStatements: [],
@@ -905,16 +881,9 @@
                 });
             });
             
-            // Step 8: Credit card acceptance buttons
-            document.querySelectorAll('.cards-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    selectButton(this, '.cards-btn');
-                    formData.creditCardAcceptance = this.dataset.value;
-                    setTimeout(() => nextStep(), 300);
-                });
-            });
+            // Step 8 removed - credit card acceptance no longer needed
             
-            // Step 9: Continue to contact button
+            // Step 8: Continue to contact button
             document.getElementById('continueToPhone')?.addEventListener('click', function() {
                 const businessName = document.getElementById('businessName').value;
                 const email = document.getElementById('email').value;
@@ -934,7 +903,7 @@
                 }
             });
             
-            // Step 10: Continue to documents button
+            // Step 9: Continue to documents button
             document.getElementById('continueToDocuments')?.addEventListener('click', function() {
                 const firstName = document.getElementById('firstName').value;
                 const lastName = document.getElementById('lastName').value;
@@ -953,7 +922,7 @@
                 }
             });
             
-            // Step 11: Skip documents button
+            // Step 10: Skip documents button
             document.getElementById('skipDocuments')?.addEventListener('click', function() {
                 submitForm();
             });
@@ -1099,7 +1068,6 @@
                 businessType: data.businessType || 'other',
                 urgency: data.urgency || 'planning',
                 fundingPurpose: data.fundingPurpose || 'working-capital',
-                creditCardAcceptance: data.creditCardAcceptance || 'no',
                 businessName: data.businessName,
                 email: data.email,
                 firstName: data.firstName,
@@ -1127,10 +1095,7 @@
             if (data.timeInBusinessMonths >= 24) score += 15;
             else if (data.timeInBusinessMonths >= 12) score += 10;
             
-            // Credit card acceptance bonus (important for MCA)
-            if (data.creditCardAcceptance === 'yes-high') score += 15;
-            else if (data.creditCardAcceptance === 'yes-medium') score += 10;
-            else if (data.creditCardAcceptance === 'yes-low') score += 5;
+            // Credit card acceptance removed - no longer needed
             
             // Urgency factor (hot leads score higher)
             if (data.urgency === 'immediate') score += 10;
@@ -1174,7 +1139,7 @@
             }
             
             // MCA (more lenient, especially with credit card processing)
-            if (data.monthlyRevenue >= 10000 && (data.creditCardAcceptance !== 'no' || data.creditScore >= 500)) {
+            if (data.monthlyRevenue >= 10000 && data.creditScore >= 500) {
                 qualifiedProducts.push({ productKey: 'mca', productName: 'Merchant Cash Advance' });
             }
             
